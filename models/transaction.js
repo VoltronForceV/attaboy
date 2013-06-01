@@ -14,12 +14,10 @@ var transaction = (function()
     {
         connection.connect();
 
-        connection.query('Insert into `transactions` set ?', row, function(err, result)
+        connection.query('Insert into `transactions` set ?', row, function(error, result)
         {
-            if (err) throw err;
-
             if(typeof callback === 'function') {
-                callback(result.insertId);
+                callback(error, result.insertId);
             }
         });
         

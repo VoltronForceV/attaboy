@@ -14,25 +14,25 @@ var user = (function()
     {
         connection.connect();
 
-        connection.query('Insert into `users` set join_date = NOW(), ?', row, function(err, result)
+        connection.query('Insert into `users` set join_date = NOW(), ?', row, function(error, result)
         {
-            if (err) throw err;
-
             if(typeof callback === 'function') {
-                callback(result.insertId);
+                callback(error, result.insertId);
             }
         });
         
         connection.end();
     }
 
-    function update(row)
+    function update(row, callback)
     {
         connection.connect();
 
-        connection.query('Update `users` set ? where user_id = ' + row.user_id, row, function(err, result)
+        connection.query('Update `users` set ? where user_id = ' + row.user_id, row, function(error, result)
         {
-            if (err) throw err;
+            if(typeof callback === 'function') {
+                callback(error);
+            }
         });
         
         connection.end();
@@ -42,10 +42,11 @@ var user = (function()
     {
         connection.connect();
 
-        connection.query('Select * from `users` where ? limit 1', row, function(err, result)
+        connection.query('Select * from `users` where ? limit 1', row, function(error, result)
         {
-            if (err) throw err;
-            callback(result[0]);
+            if(typeof callback === 'function') {
+                callback(error, result[0]);
+            }
         });
         
         connection.end();        
@@ -55,10 +56,11 @@ var user = (function()
     {
         connection.connect();
 
-        connection.query('Select * from `users` order by `user_id` desc limit ?', [limit], function(err, result)
+        connection.query('Select * from `users` order by `user_id` desc limit ?', [limit], function(error, result)
         {
-            if (err) throw err;
-            callback(result);
+            if(typeof callback === 'function') {
+                callback(error, result);
+            }
         });
         
         connection.end();
