@@ -14,24 +14,25 @@ var goal = (function()
     {
         connection.connect();
 
-        connection.query('Insert into `goals` set ?', row, function(err, result)
+        connection.query('Insert into `goals` set ?', row, function(error, result)
         {
-
             if(typeof callback === 'function') {
-                callback(err,result.insertId);
+                callback(error, result.insertId);
             }
         });
 
         connection.end();
     }
 
-    function update(row)
+    function update(row, callback)
     {
         connection.connect();
 
-        connection.query('Update `goals` set ? where goal_id = ' + row.goal_id, row, function(err, result)
+        connection.query('Update `goals` set ? where goal_id = ' + row.goal_id, row, function(error, result)
         {
-            if (err) throw err;
+            if(typeof callback === 'function') {
+                callback(error);
+            }
         });
 
         connection.end();
@@ -41,10 +42,11 @@ var goal = (function()
     {
         connection.connect();
 
-        connection.query('Select * from `goals` where goal_id = ? limit 1', [goal_id], function(err, result)
+        connection.query('Select * from `goals` where goal_id = ? limit 1', [goal_id], function(error, result)
         {
-            if (err) throw err;
-            callback(result[0]);
+            if(typeof callback === 'function') {
+                callback(error, result[0]);
+            }
         });
         
         connection.end();        
@@ -54,10 +56,11 @@ var goal = (function()
     {
         connection.connect();
 
-        connection.query('Select * from `goals` order by `goal_id` desc limit ?', [limit], function(err, result)
+        connection.query('Select * from `goals` order by `goal_id` desc limit ?', [limit], function(error, result)
         {
-            if (err) throw err;
-            callback(result);
+            if(typeof callback === 'function') {
+                callback(error, result);
+            }
         });
         
         connection.end();
