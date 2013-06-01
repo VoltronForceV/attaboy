@@ -14,25 +14,25 @@ var location = (function()
     {
         connection.connect();
 
-        connection.query('Insert into `locations` set join_date = NOW(), ?', row, function(err, result)
+        connection.query('Insert into `locations` set join_date = NOW(), ?', row, function(error, result)
         {
-            if (err) throw err;
-
             if(typeof callback === 'function') {
-                callback(result.insertId);
+                callback(error, result.insertId);
             }
         });
         
         connection.end();
     }
 
-    function update(row)
+    function update(row, callback)
     {
         connection.connect();
 
-        connection.query('Update `locations` set ? where location_id = ' + row.location_id, row, function(err, result)
+        connection.query('Update `locations` set ? where location_id = ' + row.location_id, row, function(error, result)
         {
-            if (err) throw err;
+            if(typeof callback === 'function') {
+                callback(error);
+            }
         });
         
         connection.end();
@@ -42,10 +42,11 @@ var location = (function()
     {
         connection.connect();
 
-        connection.query('Select * from `locations` where location_id = ? limit 1', [location_id], function(err, result)
+        connection.query('Select * from `locations` where location_id = ? limit 1', [location_id], function(error, result)
         {
-            if (err) throw err;
-            callback(result[0]);
+            if(typeof callback === 'function') {
+                callback(error, result[0]);
+            }
         });
         
         connection.end();        
@@ -55,10 +56,11 @@ var location = (function()
     {
         connection.connect();
 
-        connection.query('Select * from `locations` order by `location_id` desc limit ?', [limit], function(err, result)
+        connection.query('Select * from `locations` order by `location_id` desc limit ?', [limit], function(error, result)
         {
-            if (err) throw err;
-            callback(result);
+           if(typeof callback === 'function') {
+                callback(error, result);
+            }
         });
         
         connection.end();
@@ -71,3 +73,5 @@ var location = (function()
         list: list
     };
 })();
+
+module.exports = location;

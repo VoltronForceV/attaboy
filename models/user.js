@@ -8,60 +8,48 @@ var connection = mysql.createConnection({
     database : config.mysql.database
 });
 
+connection.connect();
+
 var user = (function()
 {
     function add(row, callback)
     {
-        connection.connect();
-
-        connection.query('Insert into `users` set join_date = NOW(), ?', row, function(err, result)
+        connection.query('Insert into `users` set join_date = NOW(), ?', row, function(error, result)
         {
-            if (err) throw err;
-
             if(typeof callback === 'function') {
-                callback(result.insertId);
+                callback(error, result.insertId);
             }
         });
-        
-        connection.end();
     }
 
-    function update(row)
+    function update(row, callback)
     {
-        connection.connect();
-
-        connection.query('Update `users` set ? where user_id = ' + row.user_id, row, function(err, result)
+        connection.query('Update `users` set ? where user_id = ' + row.user_id, row, function(error, result)
         {
-            if (err) throw err;
+            if(typeof callback === 'function') {
+                callback(error);
+            }
         });
-        
-        connection.end();
     }
 
-    function get(user_id, callback)
+    function get(row, callback)
     {
-        connection.connect();
-
-        connection.query('Select * from `users` where user_id = ? limit 1', [user_id], function(err, result)
+        connection.query('Select * from `users` where ? limit 1', row, function(error, result)
         {
-            if (err) throw err;
-            callback(result[0]);
+            if(typeof callback === 'function') {
+                callback(error, result[0]);
+            }
         });
-        
-        connection.end();        
     }
 
     function list(limit, callback)
     {
-        connection.connect();
-
-        connection.query('Select * from `users` order by `user_id` desc limit ?', [limit], function(err, result)
+        connection.query('Select * from `users` order by `user_id` desc limit ?', [limit], function(error, result)
         {
-            if (err) throw err;
-            callback(result);
+            if(typeof callback === 'function') {
+                callback(error, result);
+            }
         });
-        
-        connection.end();
     }
 
     return {
@@ -71,3 +59,7 @@ var user = (function()
         list: list
     };
 })();
+
+module.exports = user;
+
+//user.get({user_name: 'Alan'}, function(result) { console.log(result); });

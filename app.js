@@ -3,17 +3,25 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
-    , login = require('./routes/login')
-  , http = require('http')
-  , path = require('path')
-  , config = require('./config')
-  , goal = require('./models/goal'),
+
+var express = require('express'),
+    http = require('http'),
+    path = require('path'),
+    config = require('./config'),
+    routes ={
+	index : require('./routes/index'),
+	user  : require('./routes/user'),
+	login : require('./routes/login'),
+	goal  : require('./routes/goal')
+    },
+    models = {
+	goal        : require('./models/goal'),
+	location    : require('./models/location'),
+	user        : require('./models/user'),
+	tag         : require('./models/tag'),
+	transaction : require('./models/transaction')
+    },
     expressLayouts = require('express-ejs-layouts');
-
-
 var app = express();
 
 // all environments
@@ -37,12 +45,16 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
-app.get('/login', login.new)
-app.post('/login', login.login);
+app.get('/', routes.index.index);
+app.get('/login', routes.login.new);
+app.post('/login', routes.login.login);
+
 app.get('/goals/new', function(req, res) {
-    res.render('goals/new')
-})
+    res.render('goals/new');
+});
+
+app.get('/goal/add', routes.goal.add);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

@@ -14,12 +14,10 @@ var tag = (function()
     {
         connection.connect();
 
-        connection.query('Insert into `tags` set ?', row, function(err, result)
+        connection.query('Insert into `tags` set ?', row, function(error, result)
         {
-            if (err) throw err;
-
             if(typeof callback === 'function') {
-                callback(result.insertId);
+                callback(error, result.insertId);
             }
         });
         
@@ -30,3 +28,5 @@ var tag = (function()
         add: add
     };
 })();
+
+module.exports = tag;
