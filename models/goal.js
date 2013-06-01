@@ -22,15 +22,14 @@ var goal = (function()
 
         connection.query('Insert into `goals` set  start_date = '+start_date+', end_date = '+end_date+', ?', row, function(err, result)
         {
-            if (err) throw err;
 
             console.log('Inserted row #' + result.insertId);
 
             if(typeof callback === 'function') {
-                callback(result.insertId);
+                callback(err,result.insertId);
             }
         });
-        
+
         connection.end();
     }
 
@@ -42,7 +41,7 @@ var goal = (function()
         {
             if (err) throw err;
         });
-        
+
         connection.end();
 
     }
