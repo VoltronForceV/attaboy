@@ -7,13 +7,13 @@ var connection = mysql.createConnection({
     database : config.mysql.database
 });
 
-var goal = (function()
+var user = (function()
 {
     function add(row, callback)
     {
         connection.connect();
 
-        connection.query('Insert into `goals` set ?', row, function(err, result)
+        connection.query('Insert into `users` set join_date = NOW(), ?', row, function(err, result)
         {
             if (err) throw err;
 
@@ -31,7 +31,7 @@ var goal = (function()
     {
         connection.connect();
 
-        connection.query('Update `goals` set ? where goal_id = ' + row.goal_id, row, function(err, result)
+        connection.query('Update `users` set ? where user_id = ' + row.user_id, row, function(err, result)
         {
             if (err) throw err;
         });
@@ -39,11 +39,11 @@ var goal = (function()
         connection.end();
     }
 
-    function get(goal_id, callback)
+    function get(user_id, callback)
     {
         connection.connect();
 
-        connection.query('Select * from `goals` where goal_id = ? limit 1', [goal_id], function(err, result)
+        connection.query('Select * from `users` where user_id = ? limit 1', [user_id], function(err, result)
         {
             if (err) throw err;
             callback(result[0]);
@@ -56,7 +56,7 @@ var goal = (function()
     {
         connection.connect();
 
-        connection.query('Select * from `goals` order by `goal_id` desc limit ?', [limit], function(err, result)
+        connection.query('Select * from `users` order by `user_id` desc limit ?', [limit], function(err, result)
         {
             if (err) throw err;
 
@@ -73,23 +73,3 @@ var goal = (function()
         list: list
     };
 })();
-
-// Here's a nice example of inserting goals with a callback to display the newly inserted ID
-/*
-goal.add(
-{
-    'goal_title': "Win the Hackathon",
-    'goal_text': "This isn't sample data, it's a prophecy.",
-    'max_participants': 5,
-    'verification_method': '3rd Party',
-    'verification_users': 3,
-    'privacy_type': 'Public'
-}, function(goal_id) { console.log("Good job! You made a new goal with the ID of "+goal_id); });
-*/
-
-// Here's a super great example of updating goals!
-// goal.update({goal_id: 1, goal_title: 'HELLO WORLD!'});
-
-
-//goal.get({goal_id: 1}, function(result) { console.log(result); });
-//goal.list(10, function(result) { console.log(result); });

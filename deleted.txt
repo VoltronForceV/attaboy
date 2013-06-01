@@ -1,0 +1,8 @@
+This is where I put stuff I might end up using later
+
+       // We have to save the dates and insert them manually because NOW() is magic
+        var start_date = row.start_date;
+        var end_date = row.end_date;
+
+        delete row.start_date;
+        delete row.end_date;
