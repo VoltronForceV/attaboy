@@ -1,8 +1,12 @@
+var user_model=require('models/user');
+var info = function(id){
 
-/*
- * GET users listing.
- */
+},
+    update = function(){
 
-exports.list = function(req, res){
-  res.send("respond with a resource");
+};
+
+exports={
+    info   : info,
+    update : update
 };

@@ -1,6 +1,5 @@
-var goal_model = require('./models/goal'),
-exports= {
-    add: function(req, res){
+var goal_model = require('./models/goal');
+var add= function(req, res){
         if(req.body!== undefined){
             //goal_id
             var i,err={},user_id = session.username,form_fields={
@@ -83,5 +82,11 @@ exports= {
                 });
             }
         }
-    }
+    },
+    get= function(parameter,callback){
+	
+    };
+exports= {
+    add:add,
+    get:get
 };
