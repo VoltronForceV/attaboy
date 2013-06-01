@@ -1,0 +1,34 @@
+* authentication with google
+** log in
+** get circle data
+* Add goal
+** schema for data
+*** title
+*** description
+*** deadline
+**** action on completion
+**** action on failure
+*** interval
+**** time period
+**** should reward persist / go away / repeats?
+*** visibility option
+**** google circles?
+*** validation criteria
+**** required level of validation to trigger reward
+**** required level of validation to trigger completion
+*** dependancies
+*** reward
+**** levels of reward     
+*** creator
+*** message visablity
+*** location
+* messages
+** attached goal
+** RE: to message
+* Find goal
+** search for string
+** based on intrest/tag?
+* user profile
+** Acheivements 
+** completed goals
+** attempted goals (not shown?)
