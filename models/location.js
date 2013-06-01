@@ -71,3 +71,5 @@ var location = (function()
         list: list
     };
 })();
+
+module.exports = location;

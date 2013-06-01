@@ -5,7 +5,6 @@
 
 
 var express = require('express'),
-
     http = require('http'),
     path = require('path'),
     config = require('./config'),
@@ -23,7 +22,6 @@ var express = require('express'),
 	transaction : require('./models/transaction')
     },
     expressLayouts = require('express-ejs-layouts');
-
 var app = express();
 
 // all environments
@@ -50,6 +48,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/login', login.new);
 app.post('/login', login.login);
+
 app.get('/goals/new', function(req, res) {
     res.render('goals/new');
 });

@@ -30,3 +30,5 @@ var tag = (function()
         add: add
     };
 })();
+
+module.exports = tag;
