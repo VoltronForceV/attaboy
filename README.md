@@ -12,7 +12,7 @@ This project also requires a config.js file, it should look like this:
 
     module.exports = {
         port: 8080, // Node's listening port
-        database: {
+        mysql: {
             user: '',
             password: '',
             database: ''

@@ -34,8 +34,16 @@ var goal = (function()
         connection.end();
     }
 
-    function update(goal_id)
+    function update(row)
     {
+        connection.connect();
+
+        connection.query('Update `goals` set ? where goal_id = ' + row.goal_id, row, function(err, result)
+        {
+            if (err) throw err;
+        });
+        
+        connection.end();
 
     }
 
@@ -71,3 +79,6 @@ goal.add(
     'privacy_type': 'Public'
 }, function(goal_id) { console.log("Good job! You made a new goal with the ID of "+goal_id); });
 */
+
+// Here's a super great example of updating goals!
+// goal.update({goal_id: 1, goal_title: 'HELLO WORLD!'});
