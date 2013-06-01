@@ -5,13 +5,23 @@
 
 
 var express = require('express'),
-    routes = require('./routes'),
-    user = require('./routes/user'),
-    login = require('./routes/login'),
+
     http = require('http'),
     path = require('path'),
     config = require('./config'),
-    goal = require('./models/goal'),
+    routes ={
+	index : require('./routes/user'),
+	user  : require('./routes/user'),
+	login : require('./routes/login'),
+	goal  : require('./routes/goal')
+    },
+    models = {
+	goal        : require('./models/goal'),
+	location    : require('./models/location'),
+	user        : require('./models/user'),
+	tag         : require('./models/tag'),
+	transaction : require('./models/transaction')
+    },
     expressLayouts = require('express-ejs-layouts');
 
 var app = express();
