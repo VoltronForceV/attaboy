@@ -1,0 +1,61 @@
+Schema
+======
+
+goals
+    goal_id
+    user_id
+    parent_id
+    location_id
+    start_date
+    end_date
+    goal_title
+    goal_text
+    rewards
+    max_participants
+    verification_method
+    verification_users
+    privacy_type
+
+locations
+    location_id
+    location_type
+    address
+    address2
+    city
+    state
+    zip
+    latitude
+    longitude
+
+rewards
+    reward_id
+    goal_id
+    reward_text
+
+verification
+    verification_id
+    goal_id
+    image_url
+    video_url
+    verified_by
+    status
+
+participants
+    participant_id
+    user_id
+    goal_id
+    notes
+    
+users
+    user_id
+    location_id
+    user_name
+    user_email
+    join_date
+    login_date
+
+tags
+    tag_id
+    goal_id
+    tag_name
+    
