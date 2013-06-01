@@ -1,4 +1,5 @@
 <h1>Please Log In</h1>
+
     <form method="post" action="/login">
         <div>
             <input type="text" name="user" placeholder="Username" />
@@ -6,6 +7,7 @@
         <div>
             <input type="text" name="password" placeholder="Password" />
         </div>
+        <% if(typeof(error) != "undefined" && error) { %><div>Invalid username and/or password. Please try again.</div> <% } %>
         <div>
             <input type="submit" />
         </div>

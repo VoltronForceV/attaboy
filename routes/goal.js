@@ -1,5 +1,5 @@
-var goal_model = require('./models/goal'),
-exports= {
+var goal_model = require('../models/goal'),
+exports = {
     add: function(req, res){
         if(req.body!== undefined){
             //goal_id
