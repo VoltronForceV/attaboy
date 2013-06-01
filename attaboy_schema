@@ -37,6 +37,7 @@ verification
     goal_id
     image_url
     video_url
+    verified_by
     status
 
 participants
