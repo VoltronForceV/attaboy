@@ -1,0 +1,22 @@
+
+/*
+ * GET home page.
+ */
+
+exports.index = function(req, res){
+    res.render('index', { title: 'Express' });
+};
+
+exports.profile = function(req, res){
+    res.render('index', { title: 'Express' });
+};
+
+exports.goals = function(req, res){
+    res.render('index', { title: 'Express' });
+};
+
+exports.request = function(req,res){
+    console.log('wat');
+   // console.log([req,'-----------------------',res]);
+    console.log(['request type',req.param('type')]);
+};
