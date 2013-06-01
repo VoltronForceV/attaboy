@@ -8,13 +8,13 @@ var connection = mysql.createConnection({
     database : config.mysql.database
 });
 
-var user = (function()
+var location = (function()
 {
     function add(row, callback)
     {
         connection.connect();
 
-        connection.query('Insert into `users` set join_date = NOW(), ?', row, function(err, result)
+        connection.query('Insert into `locations` set join_date = NOW(), ?', row, function(err, result)
         {
             if (err) throw err;
 
@@ -30,7 +30,7 @@ var user = (function()
     {
         connection.connect();
 
-        connection.query('Update `users` set ? where user_id = ' + row.user_id, row, function(err, result)
+        connection.query('Update `locations` set ? where location_id = ' + row.location_id, row, function(err, result)
         {
             if (err) throw err;
         });
@@ -38,11 +38,11 @@ var user = (function()
         connection.end();
     }
 
-    function get(user_id, callback)
+    function get(location_id, callback)
     {
         connection.connect();
 
-        connection.query('Select * from `users` where user_id = ? limit 1', [user_id], function(err, result)
+        connection.query('Select * from `locations` where location_id = ? limit 1', [location_id], function(err, result)
         {
             if (err) throw err;
             callback(result[0]);
@@ -55,7 +55,7 @@ var user = (function()
     {
         connection.connect();
 
-        connection.query('Select * from `users` order by `user_id` desc limit ?', [limit], function(err, result)
+        connection.query('Select * from `locations` order by `location_id` desc limit ?', [limit], function(err, result)
         {
             if (err) throw err;
             callback(result);

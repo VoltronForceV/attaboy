@@ -8,13 +8,13 @@ var connection = mysql.createConnection({
     database : config.mysql.database
 });
 
-var transaction = (function()
+var tag = (function()
 {
     function add(row, callback)
     {
         connection.connect();
 
-        connection.query('Insert into `transactions` set ?', row, function(err, result)
+        connection.query('Insert into `tags` set ?', row, function(err, result)
         {
             if (err) throw err;
 
