@@ -10,7 +10,8 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , config = require('./config')
-  , goal = require('./models/goal');
+  , goal = require('./models/goal'),
+    expressLayouts = require('express-ejs-layouts');
 
 
 var app = express();
@@ -18,7 +19,8 @@ var app = express();
 // all environments
 app.set('port', config.port);
 app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
+app.use(expressLayouts);
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
