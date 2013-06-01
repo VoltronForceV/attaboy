@@ -9,7 +9,9 @@ exports.login = function(req, res) {
 }
 
 exports.checkLogin = function(req, res, next) {
-    if(req.path != "/" && req.path != "/login" && !req.session.user)
+    if(req.path != "/" && req.path != "/login" && !req.session.user) {
         res.redirect("/");
-    next();
+    } else {
+        next();
+    }
 }
