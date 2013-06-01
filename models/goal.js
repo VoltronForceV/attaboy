@@ -44,23 +44,39 @@ var goal = (function()
         });
         
         connection.end();
-
     }
 
-    function view(goal_id)
+    function get(goal_id, callback)
     {
+        connection.connect();
 
+        connection.query('Select * from `goals` where goal_id = ? limit 1', [goal_id], function(err, result)
+        {
+            if (err) throw err;
+            callback(result[0]);
+        });
+        
+        connection.end();        
     }
 
-    function list(row, limit)
+    function list(limit, callback)
     {
+        connection.connect();
 
+        connection.query('Select * from `goals` order by `goal_id` desc limit ?', [limit], function(err, result)
+        {
+            if (err) throw err;
+
+            console.log(result);
+        });
+        
+        connection.end();
     }
 
     return {
         add: add,
         update: update,
-        view: view,
+        get: get,
         list: list
     };
 })();
@@ -82,3 +98,7 @@ goal.add(
 
 // Here's a super great example of updating goals!
 // goal.update({goal_id: 1, goal_title: 'HELLO WORLD!'});
+
+
+//goal.get({goal_id: 1}, function(result) { console.log(result); });
+//goal.list(10, function(result) { console.log(result); });
