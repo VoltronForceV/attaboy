@@ -8,62 +8,48 @@ var connection = mysql.createConnection({
     database : config.mysql.database
 });
 
+connection.connect();
+
 var user = (function()
 {
     function add(row, callback)
     {
-        connection.connect();
-
         connection.query('Insert into `users` set join_date = NOW(), ?', row, function(error, result)
         {
             if(typeof callback === 'function') {
                 callback(error, result.insertId);
             }
         });
-        
-        connection.end();
     }
 
     function update(row, callback)
     {
-        connection.connect();
-
         connection.query('Update `users` set ? where user_id = ' + row.user_id, row, function(error, result)
         {
             if(typeof callback === 'function') {
                 callback(error);
             }
         });
-        
-        connection.end();
     }
 
     function get(row, callback)
     {
-        connection.connect();
-
         connection.query('Select * from `users` where ? limit 1', row, function(error, result)
         {
             if(typeof callback === 'function') {
                 callback(error, result[0]);
             }
         });
-        
-        connection.end();        
     }
 
     function list(limit, callback)
     {
-        connection.connect();
-
         connection.query('Select * from `users` order by `user_id` desc limit ?', [limit], function(error, result)
         {
             if(typeof callback === 'function') {
                 callback(error, result);
             }
         });
-        
-        connection.end();
     }
 
     return {
