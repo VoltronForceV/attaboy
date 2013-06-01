@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 01, 2013 at 10:18 AM
+-- Generation Time: Jun 01, 2013 at 04:31 PM
 -- Server version: 5.5.31
 -- PHP Version: 5.4.15-1
 
@@ -32,17 +32,28 @@ CREATE TABLE IF NOT EXISTS `goals` (
   `user_id` int(11) NOT NULL,
   `parent_id` int(11) NOT NULL,
   `location_id` int(11) NOT NULL,
-  `start_date` datetime NOT NULL,
-  `end_date` datetime NOT NULL,
+  `date` datetime NOT NULL,
+  `duration` int(11) NOT NULL,
   `goal_title` varchar(128) NOT NULL,
   `goal_text` text NOT NULL,
-  `rewards` text NOT NULL,
+  `reward` text NOT NULL,
   `max_participants` int(11) NOT NULL,
   `verification_method` varchar(16) NOT NULL,
   `verification_users` int(11) NOT NULL,
-  `privacy_type` varchar(16) NOT NULL,
+  `visibility` varchar(16) NOT NULL,
   PRIMARY KEY (`goal_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `goals`
+--
+
+INSERT INTO `goals` (`goal_id`, `user_id`, `parent_id`, `location_id`, `date`, `duration`, `goal_title`, `goal_text`, `reward`, `max_participants`, `verification_method`, `verification_users`, `visibility`) VALUES
+(1, 0, 0, 0, '0000-00-00 00:00:00', 2013, 'HELLO WORLD!', 'This isn''t sample data, it''s a prophecy.', '', 5, '3rd Party', 3, 'Public'),
+(2, 0, 0, 0, '0000-00-00 00:00:00', 2013, 'Win the Hackathon', 'This isn''t sample data, it''s a prophecy.', '', 5, '3rd Party', 3, 'Public'),
+(3, 0, 0, 0, '0000-00-00 00:00:00', 2013, 'Win the Hackathon', 'This isn''t sample data, it''s a prophecy.', '', 5, '3rd Party', 3, 'Public'),
+(4, 0, 0, 0, '0000-00-00 00:00:00', 2013, 'Win the Hackathon', 'This isn''t sample data, it''s a prophecy.', '', 5, '3rd Party', 3, 'Public'),
+(5, 0, 0, 0, '0000-00-00 00:00:00', 2013, 'Win the Hackathon', 'This isn''t sample data, it''s a prophecy.', '', 5, '3rd Party', 3, 'Public');
 
 -- --------------------------------------------------------
 
@@ -67,35 +78,6 @@ CREATE TABLE IF NOT EXISTS `locations` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `participants`
---
-
-DROP TABLE IF EXISTS `participants`;
-CREATE TABLE IF NOT EXISTS `participants` (
-  `participant_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `goal_id` int(11) NOT NULL,
-  `notes` text NOT NULL,
-  PRIMARY KEY (`participant_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `rewards`
---
-
-DROP TABLE IF EXISTS `rewards`;
-CREATE TABLE IF NOT EXISTS `rewards` (
-  `reward_id` int(11) NOT NULL AUTO_INCREMENT,
-  `goal_id` int(11) NOT NULL,
-  `reward_text` varchar(256) NOT NULL,
-  PRIMARY KEY (`reward_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tags`
 --
 
@@ -105,6 +87,23 @@ CREATE TABLE IF NOT EXISTS `tags` (
   `goal_id` int(11) NOT NULL,
   `tag_name` int(11) NOT NULL,
   PRIMARY KEY (`tag_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transactions`
+--
+
+DROP TABLE IF EXISTS `transactions`;
+CREATE TABLE IF NOT EXISTS `transactions` (
+  `transaction_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `goal_id` int(11) NOT NULL,
+  `action` varchar(16) NOT NULL,
+  `result` text NOT NULL,
+  `date` date NOT NULL,
+  PRIMARY KEY (`transaction_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -122,24 +121,18 @@ CREATE TABLE IF NOT EXISTS `users` (
   `join_date` datetime NOT NULL,
   `login_date` datetime NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
--- Table structure for table `verification`
+-- Dumping data for table `users`
 --
 
-DROP TABLE IF EXISTS `verification`;
-CREATE TABLE IF NOT EXISTS `verification` (
-  `verification_id` int(11) NOT NULL AUTO_INCREMENT,
-  `goal_id` int(11) NOT NULL,
-  `image_url` varchar(256) NOT NULL,
-  `video_url` varchar(256) NOT NULL,
-  `verified_by` text NOT NULL,
-  `status` varchar(16) NOT NULL,
-  PRIMARY KEY (`verification_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+INSERT INTO `users` (`user_id`, `location_id`, `user_name`, `user_email`, `join_date`, `login_date`) VALUES
+(1, 0, 'rachel', 'itsrachelfish@gmail.com', '2013-06-01 16:25:53', '0000-00-00 00:00:00'),
+(2, 0, 'devnill', 'devnill@gmail.com', '2013-06-01 16:26:49', '0000-00-00 00:00:00'),
+(3, 0, 'AtomicFiredoll', 'atomicfiredoll@usebombs.com', '2013-06-01 16:28:47', '0000-00-00 00:00:00'),
+(4, 0, 'Alan', 'Jaolen@gmail.com', '2013-06-01 16:30:23', '0000-00-00 00:00:00'),
+(5, 0, 'Jazimus', 'JasonZucker@gmail.com', '2013-06-01 16:30:46', '0000-00-00 00:00:00');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

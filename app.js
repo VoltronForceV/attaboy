@@ -12,6 +12,7 @@ var express = require('express'),
     path = require('path'),
     config = require('./config'),
     goal = require('./models/goal'),
+    user = require('./models/user'),
     expressLayouts = require('express-ejs-layouts');
 
 var app = express();

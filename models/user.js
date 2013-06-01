@@ -38,11 +38,11 @@ var user = (function()
         connection.end();
     }
 
-    function get(user_id, callback)
+    function get(row, callback)
     {
         connection.connect();
 
-        connection.query('Select * from `users` where user_id = ? limit 1', [user_id], function(err, result)
+        connection.query('Select * from `users` where ? limit 1', row, function(err, result)
         {
             if (err) throw err;
             callback(result[0]);
@@ -71,3 +71,5 @@ var user = (function()
         list: list
     };
 })();
+
+//user.get({user_name: 'Alan'}, function(result) { console.log(result); });
