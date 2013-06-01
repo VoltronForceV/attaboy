@@ -9,7 +9,7 @@ var express = require('express'),
     path = require('path'),
     config = require('./config'),
     routes ={
-	index : require('./routes/user'),
+	index : require('./routes/index'),
 	user  : require('./routes/user'),
 	login : require('./routes/login'),
 	goal  : require('./routes/goal')
@@ -45,17 +45,15 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
-app.get('/login', login.new);
-app.post('/login', login.login);
+app.get('/', routes.index.index);
+app.get('/login', routes.login.new);
+app.post('/login', routes.login.login);
 
 app.get('/goals/new', function(req, res) {
     res.render('goals/new');
 });
 
 app.get('/goal/add', routes.goal.add);
-app.post('/test', routes.request);
-app.post('/get', routes.request);
 
 
 http.createServer(app).listen(app.get('port'), function(){
