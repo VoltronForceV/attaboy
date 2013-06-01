@@ -6,10 +6,12 @@
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
+    , login = require('./routes/login')
   , http = require('http')
   , path = require('path')
   , config = require('./config')
   , goal = require('./models/goal');
+
 
 var app = express();
 
@@ -23,7 +25,9 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
 app.use(express.session());
+app.use(login.checkLogin);
 app.use(app.router);
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
@@ -32,7 +36,8 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/users', user.list);
+app.get('/login', login.new)
+app.post('/login', login.login);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
