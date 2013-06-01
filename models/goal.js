@@ -1,5 +1,6 @@
 var config = require('../config');
 var mysql = require('mysql');
+
 var connection = mysql.createConnection({
     host     : 'localhost',
     user     : config.mysql.user,
@@ -16,8 +17,6 @@ var goal = (function()
         connection.query('Insert into `goals` set ?', row, function(err, result)
         {
             if (err) throw err;
-
-            console.log('Inserted row #' + result.insertId);
 
             if(typeof callback === 'function') {
                 callback(result.insertId);
@@ -59,8 +58,7 @@ var goal = (function()
         connection.query('Select * from `goals` order by `goal_id` desc limit ?', [limit], function(err, result)
         {
             if (err) throw err;
-
-            console.log(result);
+            callback(result);
         });
         
         connection.end();
