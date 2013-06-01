@@ -71,6 +71,8 @@ var goal = (function()
     };
 })();
 
+module.exports = goal;
+
 // Here's a nice example of inserting goals with a callback to display the newly inserted ID
 /*
 goal.add(

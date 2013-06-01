@@ -72,4 +72,6 @@ var user = (function()
     };
 })();
 
+module.exports = user;
+
 //user.get({user_name: 'Alan'}, function(result) { console.log(result); });

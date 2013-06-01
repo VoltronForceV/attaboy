@@ -30,3 +30,5 @@ var transaction = (function()
         add: add
     };
 })();
+
+module.exports = transaction;
