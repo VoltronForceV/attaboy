@@ -82,6 +82,7 @@ var info = function(req,res){
 	        //not logged in
 	    }
     };
+
 module.exports={
     info   : info,
     update : update

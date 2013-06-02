@@ -11,18 +11,17 @@ function showDate(date) {
 
 <div class="row panel">
 	<div class="large-12 columns">
+		<h3 id="goalName"><%= goal.goal_title %></h3>
 
-		<h3 id="goalName">Goal Name</h3>
-
-		<p id="goalDescription">Goal Description</p>
+		<p id="goalDescription"><%= goal.goal_text %></p>
 
 		<h4>Created By</h4>
-		<p id="goalCreator">Username</p>
+		<p id="goalCreator"><%= goal.user.user_name %></p>
 
-		<h4>Tags</h4>
-		<p id="goalTags">Tags (Comma Seperated)</p>
+		<!--<h4>Tags</h4>
+		<p id="goalTags">Tags (Comma Seperated)</p> -->
 
-		<h4>Dates</h4>
+		<!--<h4>Dates</h4>
 		<div class="row">
 			<div class="large-6 columns">
 				<h5>Starts At</h5>
@@ -32,19 +31,19 @@ function showDate(date) {
 				<h5>Ends At</h5>
 				<p id="goalEndedStart">65425132</p>
 			</div>
-		</div>
+		</div> -->
 
 		<h4>Headcount Required</h4>
-		<p id="goalRequiredHeadcount"># People Signed Up of # Required People</p>
+		<p id="goalRequiredHeadcount"># of People Signed Up: <%= goal.current_participants %> # of Required People: <%= goal.max_participants %></p>
 
 		<h4>Reward</h4>
-		<p id="goalReward">Reward</p>
+		<p id="goalReward"><%= goal.reward %></p>
 
-		<h5>Reward Requirments</h5>
+		<!--<h5>Reward Requirements</h5>
 		<p id="goalRewardProof">Photos of finished shit</p>
 
 		<h5>Reward Distribution</h5>
-		<p id="goalRewardShiping">I will hug you when I see you</p>
+		<p id="goalRewardShiping">I will hug you when I see you</p> -->
 	</div>
 </div>
 

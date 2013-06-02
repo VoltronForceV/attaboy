@@ -15,6 +15,7 @@ var respond = function(error, response){
 
 goal = require('../models/goal'),
 boilerplate = require('../boilerplate');
+var user = require('../models/user');
 
 var add = function(req, res)
 {
@@ -95,6 +96,14 @@ console.log(req.body);
 },
 
 get = function(req, res) {
+    goal.get(req.params.id, function(err, data) {
+        user.get({ user_id: data.user_id }, function(error, user) {
+            data.user = user;
+            data.current_participants = 0;
+            res.render('goals/show', {goal: data});
+        })
+
+    })
 
 },
 
@@ -105,6 +114,15 @@ index = function(req, res) {
             }
         })
     };
+
+var join = function(req, res) {
+    goal.join(req.session.user, req.params.id, function(err) {
+        if(err) {
+            console.log(err);
+        }
+        res.render("goals")
+    })
+}
 
 module.exports= {
     add:add,
