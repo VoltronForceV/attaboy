@@ -220,8 +220,8 @@ var join = function (req, res) {
             })
         })
         res.redirect("/goal/" + req.params.id);
-    }
-}
+    });}
+		   
 var finish = function (req, res) {
     transaction.add({user_id: req.session.user.user_id, goal_id: req.params.id, date: new Date(), action: "finish"}, function (err, result) {
         goal.get({goal_id: req.params.id}, function (err, result) {
