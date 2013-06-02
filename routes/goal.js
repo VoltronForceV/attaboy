@@ -1,4 +1,18 @@
-var goal_model = require('./models/goal');
+var respond = function(err, response){
+    if(err!==undefined){
+        res.send({
+            status : 'failure',
+            data   : response
+        });
+    }
+    else{
+        res.send({
+            status : 'success',
+            data   : response
+        });
+    }
+},
+    goal_model = require('./models/goal');
 var add= function(req, res){
         if(req.body!== undefined){
             //goal_id
@@ -14,22 +28,8 @@ var add= function(req, res){
                 verification_method:undefined,
                 verification_users:undefined,
                 visibility:undefined
-            },
-                respond = function(err, response){
-                    var status;
-                    if(err!==undefined){
-                        res.send({
-                            status : 'failure',
-                            data   : 'response'
-                        });
-                    }
-                    else{
-                        res.send({
-                            status : 'success',
-                            data   : 'response'
-                        });
-                    }
-                };
+            };
+
             for(i in form_fields){
                 if(req.body[i]!==undefined){
                     form_fields[i]=req.body[i];
