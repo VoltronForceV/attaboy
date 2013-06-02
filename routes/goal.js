@@ -17,6 +17,7 @@ goal = require('../models/goal'),
 transaction = require('../models/transaction'),
 boilerplate = require('../boilerplate');
 var user = require('../models/user');
+var transaction = require("../models/transaction")
 
 var add = function(req, res)
 {
@@ -95,7 +96,7 @@ var add = function(req, res)
 },
 
 ante = function(req, res)
-{    
+{
     goal.get({goal_id: req.params.id}, function(error, goal_data)
     {
         var params = req.body, error = {};
@@ -107,7 +108,7 @@ ante = function(req, res)
         {
             if(params.reward != 'Custom')
                 params.reward_text = params.reward;
-            
+
             var reward = JSON.parse(goal_data.reward);
             reward.push({
                 'user_id': req.session.user.user_id,
@@ -123,7 +124,7 @@ ante = function(req, res)
                 verification_users: params.verification_users}, function()
                 {
                     var datetime = boilerplate.datetime(new Date());
-                    
+
                     transaction.add({user_id: req.session.user.user_id, goal_id: req.params.id, action: 'goal', result: '{}', date: datetime}, function()
                     {
                         res.redirect("/goal/"+req.params.id);
@@ -133,7 +134,7 @@ ante = function(req, res)
         else
         {
             res.render("goals/ante", {error: error, goal_id: req.params.id});
-        }        
+        }
     });
 
 },
@@ -143,9 +144,19 @@ get = function(req, res) {
         user.get({ user_id: data.user_id }, function(error, user) {
             data.user = user;
             data.current_participants = 0;
-            res.render('goals/show', {goal: data});
-        })
+            transaction.find({goal_id: req.params.id, "action": "join" }, function(error, trans) {
+                data.current_participants = trans.length;
+                var signed_up = false;
+                var t;
+                for(t = 0;t < trans.length;t++) {
+                    if(trans[t].user_id == req.session.user.user_id) {
+                        signed_up = true;
+                    }
+                }
+                res.render('goals/show', {goal: data, signed_up: signed_up });
 
+            })
+        })
     })
 
 },
@@ -159,12 +170,11 @@ index = function(req, res) {
     };
 
 var join = function(req, res) {
-    goal.join(req.session.user, req.params.id, function(err) {
-        if(err) {
-            console.log(err);
-        }
-        res.render("goals")
-    })
+    transaction.add({user_id: req.session.user.user_id, goal_id: req.params.id, date: new Date(), action: "join"}, function(err, result) {
+        res.redirect("/goal/" + req.params.id);
+
+    });
+
 }
 
 
@@ -172,5 +182,6 @@ module.exports = {
     add: add,
     ante: ante,
     get: get,
-    index: index
+    index: index,
+    join: join
 };

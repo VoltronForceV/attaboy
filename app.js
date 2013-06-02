@@ -54,6 +54,7 @@ app.get('/goal/create', function(req, res) {res.render('goals/create');});
 app.get("/goal/:id", routes.goal.get);
 app.get('/goal/:id/comment',routes.goal.get);
 app.get('/goal/:id/ante', function(req, res) {res.render('goals/ante', { goal_id: req.params.id });});
+app.get('/goal/:id/join', routes.goal.join)
 app.get("/search", function(req, res){res.render('search');});
 app.get('/dashboard', routes.index.dashboard);
 

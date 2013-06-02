@@ -30,12 +30,34 @@ var transaction = (function()
 
                 }
             });
+        },
+        find=function(row, callback) {
+            var i;
+            var s = ""
+            var vals = [];
+            var first = true;
+            for(i in row) {
+                if(!first)
+                    s = s + " AND "
+                first = false;
+                s = s + i + " = ?"
+                vals.push(row[i])
+            }
+                        var f = connection.query('Select * from `transactions` where ' + s, vals, function(error, result){
+                            if(typeof callback === 'function') {
+            		            if(result!==undefined&&result.length>0){
+            		                callback(error, result);
+            		            }
+                            }
+                        });
+            console.log(f);
         };
 
 
     return {
         add: add,
-        get: get
+        get: get,
+        find: find
     };
 })();
 
