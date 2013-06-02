@@ -16,6 +16,7 @@ var user = (function()
     {
         connection.query('Insert into `users` set join_date = NOW(), ?', row, function(error, result)
         {
+            console.log([error,result]);
             if(typeof callback === 'function') {
                 callback(error, result.insertId);
             }

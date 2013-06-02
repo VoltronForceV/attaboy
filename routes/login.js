@@ -43,7 +43,7 @@ exports.auth = function(req,res){
         // for Google+ scope.
         var url = oauth2Client.generateAuthUrl({
             access_type: 'offline',
-            scope: 'https://www.googleapis.com/auth/plus.me email'
+            scope: 'https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.profile email'
         });
         res.redirect(url);
     }
@@ -63,23 +63,62 @@ exports.authcb = function(req,res){
 	          uri:'https://accounts.google.com/o/oauth2/token',
 	          body: token_request
 	        },function (err, response, body) {
-                console.log(['hi',body]);
+                var access_token,
+                    expires_in,
+                    id_token;
+
+                console.log(['hi',JSON.parse(body)]);
+
                 if(err==undefined && response.statusCode==200){
-                    var token = 'OAuth '+JSON.parse(response.body).access_token;
+                    access_token=JSON.parse(response.body).access_token;
+                    expires_in=JSON.parse(response.body).expires_in;
+                    id_token=JSON.parse(response.body).id_token;
+                    var token = 'OAuth '+access_token;
                     request({ method: 'GET',
                               headers:{'Content-length': 0,Authorization: token},
                               uri:'https://www.googleapis.com/oauth2/v2/userinfo'},function(err,body,deets){
                                   if(err == undefined && body.statusCode==200){
-                                      console.log(deets);
-                                      users.get({user_id:deets.id},function(err,result){
+                                           deets=JSON.parse(deets);
+                                      users.get({user_email:deets.email},function(err,result){
                                           if(err==undefined){
                                               if(result==undefined){
                                                   //new user
-                                                  users.add({});
+
+
+                                                  var user={
+                                                      user_email:deets.email,
+                                                      user_name:deets.name,
+                                                      expiration: expires_in,
+                                                      access_token: access_token,
+                                                      id_token: id_token};
+                                                  console.log(user);
+                                                 users.add(user,function(err,result){
+                                                      console.log([err,result]);
+                                                     if(err==undefined){
+                                                         req.session.user = user;
+                                                         res.render("dashboard", {user: user});
+                                                     }
+                                                     else{
+
+                                                     }
+
+                                                 });
+
+
+
                                               }
                                               else{
+                                                  console.log('signed in');
                                                   //sign in
+                                                  req.session.user=result;
+                                                  res.render("dashboard", {user: user});
                                               }
+
+
+
+
+
+
                                           }
                                           else{
                                               console.log('sssss');
