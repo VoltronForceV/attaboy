@@ -9,7 +9,7 @@ exports.login = function(req, res) {
     users.get({user_name: params.user }, function(e, user) {
 	if(user != null) {
             req.session.user = user;
-            res.render("index", {title: "Express", user: req.session.user });
+            res.render("index", {user: user});
         } else {
             res.render("login/new", {error: true});
         }

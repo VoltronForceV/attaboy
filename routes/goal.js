@@ -88,7 +88,7 @@ console.log(req.body);
             }
             else
             {
-                res.render("goals/create", {error: error, user: req.session.user});
+                res.render("goals/create", {error: error});
             }
         }
     }
@@ -101,7 +101,7 @@ get = function(req, res) {
 index = function(req, res) {
         goal.list(20, function(err, data) {
             if(!err) {
-                res.render("goals/index", { user: req.session.user, goals: data});
+                res.render("goals/index", { goals: data});
             }
         })
     };
