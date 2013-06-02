@@ -26,7 +26,7 @@
 			<h3>Goals in Progess</h3>
 			<ul>
                 <% for(var i = 0;i < active_goals.length;i++) { %>
-                    <li><a href="/goal/<%= active_goals[i].goal_id %>"><%= completed_goals[i].goal_title %></a></li>
+                    <li><a href="/goal/<%= active_goals[i].goal_id %>"><%= active_goals[i].goal_title %></a></li>
                 <% } %>
 			</ul>
 		</div>
