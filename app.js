@@ -57,18 +57,15 @@ app.get('/goal/:id/ante', function(req, res) {res.render('goals/ante', { goal_id
 app.get("/search", function(req, res){res.render('search');});
 app.get('/dashboard', routes.index.dashboard);
 
+app.get('/auth',routes.login.auth);
+app.get('/authcb',routes.login.authcb);
+
 //post requests
 app.post('/login', routes.login.login);
-
 app.post('/goals/create', routes.goal.add);
 app.post('/user/edit', routes.user.process_update);
 app.post('/goal/create', routes.goal.add);
 app.post('/goal/:id/ante', routes.goal.ante);
-
-
-
-
-
 
 
 
