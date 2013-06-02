@@ -27,7 +27,7 @@ var info = function(req,res){
                     transaction_model.get({user_id: result.user_id}, function(err, transactions){
                         //filter transactions
                         //load user page
-                        res.render('profile/user', { user: result,active_goals: undefined,completed_goals: undefined });
+                        res.render('user/profile', { user: result,active_goals: undefined,completed_goals: undefined });
                     });
                 }
             }
@@ -44,7 +44,7 @@ var info = function(req,res){
             if(err!==undefined){
                 //filter transactions
                 //load user page
-                res.render('profile/user', { user: req.session.user,active_goals: undefined,completed_goals: undefined });
+                res.render('user/profile', { user: req.session.user,active_goals: undefined,completed_goals: undefined });
             }
         });
     }
