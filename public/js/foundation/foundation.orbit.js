@@ -10,9 +10,9 @@
 
     settings: {
       timer_speed: 4000,
-      pause_on_hover: true,
+      pause_on_hover: false,
       resume_on_mouseout: false,
-      animation_speed: 500,
+      animation_speed: 200,
       bullets: false,
       stack_on_small: true,
       navigation_arrows: false,
@@ -25,7 +25,7 @@
       timer_paused_class: 'paused',
       timer_progress_class: 'orbit-progress',
       slides_container_class: 'orbit-slides-container',
-      bullets_container_class: 'orbit-bullets',
+      bullets_container_class: '',
       bullets_active_class: 'active',
       slide_number_class: 'orbit-slide-number',
       caption_class: 'orbit-caption',
