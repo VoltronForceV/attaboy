@@ -30,7 +30,7 @@
 
 	<header class="row masterhead">
 		<div class="large-3 columns">
-			<h1><a href="/">Attaboy!</a></h1>
+			<h1><a href="/"><img src="/media/img/branding.png"</a></h1>
 		</div>
 
 		<div class="large-7 columns">
@@ -52,7 +52,7 @@
 		    <% if(typeof(user) != "undefined") { %>
 			<a href="/user" class="small button split right">Profile <span data-dropdown="profile-drop"></span></a>
 			<ul id="profile-drop" class="f-dropdown" data-dropdown-content>
-				<li><a href="#">Edit Profile</a></li>
+				<li><a href="/user/edit">Edit Profile</a></li>
 				<li><a href="/logout">Log Out</a></li>
 			</ul>
 			<% } else { %>
