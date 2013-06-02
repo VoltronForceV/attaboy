@@ -1,3 +1,14 @@
+<script type="text/javascript">
+$(function() {
+	$('#popupDatepicker').datepick();
+	$('#inlineDatepicker').datepick({onSelect: showDate});
+});
+
+function showDate(date) {
+	alert('The date chosen is ' + date);
+}
+</script>
+
 <div class="row">
 	<div class="large-12 columns">
 		<h2>Create a New Goal</h2>
@@ -70,15 +81,15 @@
 
 			<div class="row">
 				<div class="large-12 columns">
-					<label>Starts At:</label>
-					<input type="datetime-local">
+					<label>Ends At:</label>
+					<input type="text" class="popupDatepicker">
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="large-12 columns">
 					<label>Ends At:</label>
-					<input type="datetime-local">
+					<input type="text" class="popupDatepicker">
 				</div>
 			</div>
 
