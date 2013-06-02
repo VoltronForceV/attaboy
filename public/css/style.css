@@ -203,3 +203,9 @@ button.datepick-cmd {
 select.datepick-month-year{
 	width:auto;
 }
+
+/* ------- Header Features -------- */
+
+.button-login, .search-header{
+	margin-top: 30px;
+};
