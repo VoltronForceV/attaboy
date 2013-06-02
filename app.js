@@ -35,7 +35,7 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
 app.use(express.session());
-//app.use(login.checkLogin);
+app.use(login.checkLogin);
 app.use(app.router);
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -48,12 +48,17 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index.index);
 app.get('/login', routes.login.new);
 app.post('/login', routes.login.login);
+app.get('/logout', routes.login.logout);
 
 app.get('/goals/new', function(req, res) {
     res.render('goals/new');
 });
 
-app.get('/goal/add', routes.goal.add);
+app.get('/rewards/new', function(req, res) {
+    res.render('rewards/new')
+})
+
+//app.get('/goal/add', routes.goal.add);
 
 
 http.createServer(app).listen(app.get('port'), function(){

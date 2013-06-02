@@ -74,7 +74,7 @@ var add= function(req, res){
             } //end post iteration
 
             if(err!==undefined){
-                respond(true,err);
+                 respond(true,err);
             }
             else{
                 goal_model.add(form_fields, function(err,goal_id){
@@ -84,9 +84,9 @@ var add= function(req, res){
         }
     },
     get= function(parameter,callback){
-	
+
     };
-exports= {
+module.exports= {
     add:add,
     get:get
 };
