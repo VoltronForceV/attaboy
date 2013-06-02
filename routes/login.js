@@ -55,7 +55,7 @@ exports.authcb = function(req,res){
 
     token_request='code='+req['query']['code']+
 	    '&client_id=509218314760.apps.googleusercontent.com&client_secret=H69oQg1TVTk9eQY2tVeYrrXh'+
-	    '&redirect_uri=http://hyper.wetfish.net:8082/authcb'+
+	    '&redirect_uri=http://attaboy.wetfish.net:8080/authcb'+
 	    '&grant_type=authorization_code';
     request_length = token_request.length;
     request({ method: 'POST',
