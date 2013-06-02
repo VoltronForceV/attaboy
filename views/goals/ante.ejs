@@ -1,16 +1,16 @@
 <div class="row">
 	<div class="large-12 columns">
-		<h2>Create a New Goal</h2>
+		<h2>Add A Reward</h2>
 	</div>
 </div>
 
 <div class="row panel">
 	<div class="large-12 columns">
-		<form>
+		<form method='post'>
 			<div class="row">
 				<div class="large-12 columns">
 					<label>Select a Reward</label>
-					<select>
+					<select name='reward'>
 						<option>Custom</option>
 						<option>A Giant Hug</option>
 						<option>A Warm Fuzzy Feeling</option>
@@ -22,28 +22,29 @@
 			<div class="row">
 				<div class="large-12 columns">
 					<label>What's the Custom Reward?</label>
-					<input type="text">
+					<input name='reward_text' type="text">
+                    <% if(typeof(error) != "undefined" && error.reward_text) { %><div class="error"> <%= error.reward_text %> </div> <% } %>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="large-12 columns">
 					<label>When Will the Reward Arrive?</label>
-					<input type="text">
+					<input name='arrival' type="text">
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="large-12 columns">
 					<label>How Many People Should Validate?</label>
-					<input type="text">
+					<input name='verification_users' type="text">
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="large-12 columns">
 					<label>Who Should Validate?</label>
-					<select>
+					<select name='verification_method'>
 						<option>Me</option>
 						<option>Consensus</option>
 						<option>3rd Party</option>
@@ -54,7 +55,7 @@
 
 			<div class="row">
 				<div class="large-12 columns">
-					<a href="/rewards/new" class="large button">Finish Creating Goal!</a>
+					<input type='submit' class="large button" value='Finish Creating Goal!'>
 				</div>
 			</div>
 		</form>

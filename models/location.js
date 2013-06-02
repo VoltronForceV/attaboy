@@ -32,9 +32,9 @@ var location = (function()
         });
     }
 
-    function get(location_id, callback)
+    function get(row, callback)
     {
-        connection.query('Select * from `locations` where location_id = ? limit 1', [location_id], function(error, result)
+        connection.query('Select * from `locations` where ? limit 1', row, function(error, result)
         {
             if(typeof callback === 'function') {
                 callback(error, result[0]);
