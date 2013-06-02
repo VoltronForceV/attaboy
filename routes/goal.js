@@ -99,8 +99,7 @@ get = function(req, res) {
 },
 
 index = function(req, res) {
-        goal_model.list(20, function(err, data) {
-            console.log(data.length)
+        goal.list(20, function(err, data) {
             if(!err) {
                 res.render("goals/index", { user: req.session.user, goals: data});
             }
