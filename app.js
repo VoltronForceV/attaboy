@@ -14,13 +14,6 @@ var express = require('express'),
 	login : require('./routes/login'),
 	goal  : require('./routes/goal')
     },
-    models = {
-	goal        : require('./models/goal'),
-	location    : require('./models/location'),
-	user        : require('./models/user'),
-	tag         : require('./models/tag'),
-	transaction : require('./models/transaction')
-    },
     expressLayouts = require('express-ejs-layouts');
 var app = express();
 
@@ -45,25 +38,20 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+	index : require('./routes/index'),
+	user  : require('./routes/user'),
+	login : require('./routes/login'),
+	goal  : require('./routes/goal')
+
+//get requests
 app.get('/', routes.index.index);
-app.get('/login', routes.login.new);
-app.post('/login', routes.login.login);
-app.get('/logout', routes.login.logout);
-app.get('/goals', routes.goal.index);
-
-app.get('/goals/new', function(req, res) {
-    res.render('goals/new', { user: req.session.user });
-});
-
-app.get('/rewards/new', function(req, res) {
-    res.render('rewards/new', { user: req.session.user })
-})
-
-app.get("/goals/:id", function(req, res) {
-    res.render('goals/show', { user: req.session.user })
-})
-
-//app.get('/goal/add', routes.goal.add);
+app.get('/user',routes.user.info);
+app.get('/user/edit',routes.user.update);
+app.get('/user/:id',routes.user.info);
+app.get('/goal',routes.goal.get);
+app.get('/goal/:id',routes.goal.get);
+app.get('/goal/:id/comment',routes.goal.get);
+app.get('/goal/:id/ante',routes.goal.update);
 
 
 http.createServer(app).listen(app.get('port'), function(){
