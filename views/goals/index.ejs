@@ -2,13 +2,22 @@
  if(goals.length == 0) { %>
 <p>No goals available.</p>
 <% } else {
-    for(var i = 0;i < goals.length;i++) {
-    var goal = goals[i];
+	for(var i = 0;i < goals.length;i++) {
+	var goal = goals[i];
  %>
-    <div class="goal">
-        <div class="title"><a href="/goals/<%= goal.goal_id %>"><%= goal.goal_title %></a></div>
-        <div class="reward">Reward: <%= goal.reward %></div>
-        <div class="users">Users: 0 / <%= goal.max_participants %></div>
-    </div>
+<div class="row panel listing">
+	<div class="large-12 columns">
+		<h3><a href="/goals/<%= goal.goal_id %>"><%= goal.goal_title %></a></h3>
+	</div>
+	<div class="large-6 columns">
+		<h4>Reward:</h4> 
+		<p class="reward"><%= goal.reward %></p>
+	</div>
+	<div class="large-6 columns">
+		<h4>Users:</h4> 
+		<p class="users">0 / <%= goal.max_participants %></p>
+	</div>
+	<a href="/goals/<%= goal.goal_id %>" class="button">See More About This Goal</a>
+</div>
 <% }
  }%>
