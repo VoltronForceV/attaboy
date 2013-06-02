@@ -1,5 +1,19 @@
-<ul>
+<div class="row">
+	<div class="large-12 columns">
+		<h2>Verifications</h2>
+	</div>
+</div>
+
 <% for(var i = 0;i < verifications.length;i++) { %>
-    <li><%= verifications[i].user.user_name %> - <%= verifications[i].goal.goal_title %></li>
+<div class="row panel">
+	<div class="large-8 columns">
+		<%= verifications[i].goal.goal_title %> - <%= verifications[i].user.user_name %>
+	</div>
+	<div class="large-2 columns">
+		<a href="/goal/new" class="tiny button expand right">Approve</a>
+	</div>
+	<div class="large-2 columns">
+		<a href="/goal/new" class="tiny button expand right">Nope.</a>
+	</div>
+</div>
 <% } %>
-</ul>
