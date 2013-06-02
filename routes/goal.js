@@ -13,10 +13,13 @@ var respond = function (error, response) {
         }
     },
 
-goal = require('../models/goal'),
-transaction = require('../models/transaction'),
-boilerplate = require('../boilerplate'),
-user = require('../models/user');
+    goal = require('../models/goal'),
+    transaction = require('../models/transaction'),
+    boilerplate = require('../boilerplate'),
+    user = require('../models/user'),
+    SendGrid = require('sendgrid').SendGrid,
+    config = require('../config');
+var sendgrid = new SendGrid("abaldwin", config.sendgrid.secret);
 
 var create = function(req, res) {
         goal.get({goal_id: req.params.id}, function (error, goal_data)
@@ -173,7 +176,7 @@ var create = function(req, res) {
 
     index = function (req, res) {
         goal.list(20, function (err, data) {
-            if (!err) {                    
+            if (!err) {
                 res.render("goals/index", { goals: data});
             }
         })
@@ -198,20 +201,48 @@ var create = function(req, res) {
         {
             res.redirect("/user/" + req.session.user.user_id);
         });
-    },
-
-    join = function (req, res) {
-        transaction.add({user_id: req.session.user.user_id, goal_id: req.params.id, date: new Date(), action: "join"}, function (err, result) {
-            res.redirect("/goal/" + req.params.id);
-        });
-
-    },
-    
-    finish = function (req, res) {
-        transaction.add({user_id: req.session.user.user_id, goal_id: req.params.id, date: new Date(), action: "finish"}, function (err, result) {
-            res.redirect("/goal/" + req.params.id);
-        })
     };
+    
+var join = function (req, res) {
+    transaction.add({user_id: req.session.user.user_id, goal_id: req.params.id, date: new Date(), action: "join"}, function (err, result) {
+        goal.get({goal_id: req.params.id}, function (err, result) {
+            user.get({user_id: result.user_id }, function (err, user_result) {
+                sendgrid.send({
+                    to: user_result.user_email,
+                    from: "jaolen@gmail.com",
+                    subject: "Someone has joined your goal!",
+                    text: "Someone has joined your goal (" + result.goal_title + ")."
+                }, function (success, message) {
+                    if (!success) {
+                        console.log(message);
+                    }
+                })
+            })
+        })
+        res.redirect("/goal/" + req.params.id);
+    }
+}
+var finish = function (req, res) {
+    transaction.add({user_id: req.session.user.user_id, goal_id: req.params.id, date: new Date(), action: "finish"}, function (err, result) {
+        goal.get({goal_id: req.params.id}, function (err, result) {
+            user.get({user_id: result.user_id }, function (err, user_result) {
+                user.get({user_id: req.session.user.user_id }, function (err, target_user) {
+                    sendgrid.send({
+                        to: user_result.user_email,
+                        from: "jaolen@gmail.com",
+                        subject: target_user.user_name + " has finished your goal!",
+                        text: target_user.user_name + " has finished your goal (" + result.goal_title + ")."
+                    }, function (success, message) {
+                        if (!success) {
+                            console.log(message);
+                        }
+                    })
+                })
+            })
+        })
+        res.redirect("/goal/" + req.params.id);
+    })
+}
 
 module.exports = {
     create: create,
