@@ -129,7 +129,7 @@ var verifications = function(req, res) {
                     if(trans.action == "finish") {
                         var found = false;
                         for(j = 0;j < transactions.length;j++) {
-                            if(transactions[j].action == "verify" && transactions[j].user_id == trans.user_id && transactions[j].goal_id == trans.goal_id) {
+                            if((transactions[j].action == "verify" || transactions[j].action == "deny") && transactions[j].user_id == trans.user_id && transactions[j].goal_id == trans.goal_id) {
                                 found = true
                             }
                         }
@@ -168,9 +168,18 @@ var verifications = function(req, res) {
 
 }
 
+var verify = function(req, res) {
+    transaction_model.get({ transaction_id: req.params.id }, function(e, d) {
+        transaction_model.add({ user_id: d.user_id, goal_id: d.goal_id, action: req.params.operation, date: new Date() }, function() {
+            res.redirect("/verifications")
+        })
+    })
+}
+
 module.exports={
     info   : info,
     update : update,
     process_update: process_update,
-    verifications: verifications
+    verifications: verifications,
+    verify: verify
 };
