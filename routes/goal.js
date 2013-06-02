@@ -120,7 +120,7 @@ var add = function (req, res) {
                 });
             }
             else {
-                res.render("goals/ante", {error: error, goal_id: req.params.id});
+                res.render("goals/ante", {error: error, goal_id: req.params.id, user: req.session.user, goal: goal_data});
             }
         });
 
@@ -140,7 +140,7 @@ var add = function (req, res) {
                                 signed_up = true;
                             }
                         }
-                        res.render('goals/show', {goal: data, signed_up: signed_up, finished: finished.length > 0 });
+                        res.render('goals/show', {goal: data, user: req.session.user, signed_up: signed_up, finished: finished.length > 0 });
                     })
                 })
             })

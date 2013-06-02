@@ -55,7 +55,11 @@
 
 			<div class="row">
 				<div class="large-12 columns">
-					<input type='submit' class="large button" value='Finish Creating Goal!'>
+                    <% if(goal.user_id == user.user_id) { %>
+                        <input type='submit' class="large button" value='Finish Creating Goal!'>
+                    <% } else { %>
+                        <input type='submit' class="large button" value='Up the Ante!'>
+                    <% } %>
 				</div>
 			</div>
 		</form>
