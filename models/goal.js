@@ -87,19 +87,21 @@ var goal = (function () {
         for(var i = reward.length; i > 0; i--)
         {
             var current = reward.shift();
-            var arrival = "";
-            
-            if(current.arrival != '')
-                arrival = "Arriving "+ current.arrival;
                 
-            user.get({user_id: current.user_id}, function(error, user_data)
+            user.get({user_id: current.user_id}, function(error, user_data, current)
             {
-                output += "<li>"+current.text+" courtesy of <a href='/user/"+user_data.user_id+"'>"+user_data.user_name+"</a> "+arrival+"</li>";
+                var arrival = "";
 
-                if(i == 0){
+                if(current.element.arrival != '')
+                    arrival = "Arriving "+ current.element.arrival;
+                
+                output += "<li>"+current.element.text+" courtesy of <a href='/user/"+user_data.user_id+"'>"+user_data.user_name+"</a> "+arrival+"</li>";
+
+                if(current.size == 0){
+                    console.log('Nothing left!');
                     callback("<ul>"+output+"</ul>");
                 }
-            });
+            }, {element: current, size: reward.length});
         }
     }
 

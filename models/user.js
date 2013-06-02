@@ -32,17 +32,17 @@ var user = (function()
         });
     }
 
-    function get(row, callback){
-        console.log('get user data');
+    function get(row, callback, extra){
         connection.query('Select * from `users` where ? limit 1', row, function(error, result){
-            console.log([error,result,'dfffff']);
+            console.log(['User data', error, result]);
+
             if(typeof callback === 'function') {
 		        if(result!==undefined){
-                    callback(error, result[0]);
+                    callback(error, result[0], extra);
 		        }
                 else
                 {
-                    callback(error, undefined);
+                    callback(error, undefined, extra);
                 }
             }
         });
