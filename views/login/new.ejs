@@ -1,14 +1,17 @@
-<h1>Please Log In</h1>
-
-    <form method="post" action="/login">
-        <div>
-            <input type="text" name="user" placeholder="Username" />
-        </div>
-        <div>
-            <input type="text" name="password" placeholder="Password" />
-        </div>
-        <% if(typeof(error) != "undefined" && error) { %><div class="error">Invalid username and/or password. Please try again.</div> <% } %>
-        <div>
-            <input type="submit" />
-        </div>
-    </form>
+<div class="row panel">
+	<div class="large-12 columns">
+		<h3>Please Log In</h3>
+		<form method="post" action="/login">
+			<div>
+				<input type="text" name="user" placeholder="Username" />
+			</div>
+			<div>
+				<input type="text" name="password" placeholder="Password" />
+			</div>
+			<% if(typeof(error) != "undefined" && error) { %><div class="error">Invalid username and/or password. Please try again.</div> <% } %>
+			<div>
+				<input type="submit" class="button" value="Login" />
+			</div>
+		</form>
+	</div>
+</div>

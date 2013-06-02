@@ -96,9 +96,19 @@ console.log(req.body);
 
 get = function(req, res) {
 
-};
-    
-module.exports = {
+},
+
+index = function(req, res) {
+        goal_model.list(20, function(err, data) {
+            console.log(data.length)
+            if(!err) {
+                res.render("goals/index", { user: req.session.user, goals: data});
+            }
+        })
+    };
+
+module.exports= {
     add:add,
-    get:get
+    get:get,
+    index: index
 };
