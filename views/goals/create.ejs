@@ -1,83 +1,83 @@
 <script type="text/javascript">
 $(function() {
-	$('#popupDatepicker').datepick();
-	$('#inlineDatepicker').datepick({onSelect: showDate});
+    $('#popupDatepicker').datepick();
+    $('#inlineDatepicker').datepick({onSelect: showDate});
 });
 
 function showDate(date) {
-	alert('The date chosen is ' + date);
+    alert('The date chosen is ' + date);
 }
 </script>
 
 <div class="row">
-	<div class="large-12 columns">
-		<h2>Create a New Goal</h2>
-	</div>
+    <div class="large-12 columns">
+        <h2>Create a New Goal</h2>
+    </div>
 </div>
 
 <div class="row panel">
-	<div class="large-12 columns">
-		<form method='post'>
-			<div class="row">
-				<div class="large-12 columns">
-					<label>Goal Name</label>
-					<input name="goal_title" type="text" <% if(typeof(goal) != "undefined") { %>value="<%= goal.goal_title %>"<% } %>>
+    <div class="large-12 columns">
+        <form method='post'>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>Goal Name</label>
+                    <input name="goal_title" type="text" <% if(typeof(goal) != "undefined") { %>value="<%= goal.goal_title %>"<% } %>>
                     <% if(typeof(error) != "undefined" && error.goal_title) { %><div class="error"> <%= error.goal_title %> </div><% } %>
-				</div>
-			</div>
+                </div>
+            </div>
 
-			<div class="row">
-				<div class="large-12 columns">
-					<label>Goal Description</label>
-					<textarea name="goal_text"><% if(typeof(goal) != "undefined") { %><%= goal.goal_text %><% } %></textarea>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>Goal Description</label>
+                    <textarea name="goal_text"><% if(typeof(goal) != "undefined") { %><%= goal.goal_text %><% } %></textarea>
                     <% if(typeof(error) != "undefined" && error.goal_text) { %><div class="error"> <%= error.goal_text %> </div><% } %>
-				</div>
-			</div>
+                </div>
+            </div>
 
-			<div class="row">
-				<div class="large-12 columns">
-					<label>Tags (Comma Seperated)</label>
-					<input name="tags" type="text">
-				</div>
-			</div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>Tags (Comma Seperated)</label>
+                    <input name="tags" type="text">
+                </div>
+            </div>
 
-			<div class="row">
-				<div class="large-12 columns">
-					<label>Privacy</label>
-					<select name="visibility">
-						<option>Public</option>
-						<option>Personal</option>
-						<option>Friends</option>
-					</select>
-				</div>
-			</div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>Privacy</label>
+                    <select name="visibility">
+                        <option>Public</option>
+                        <option>Personal</option>
+                        <option>Friends</option>
+                    </select>
+                </div>
+            </div>
 
-			<div class="row">
-				<div class="large-12 columns">
-					<label>Starts On:</label>
-					<input name="start_time" class="popupDatepicker" <% if(typeof(goal) != "undefined") { %>value="<%= goal.start_time %>"<% } %>>
-				</div>
-			</div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>Starts On:</label>
+                    <input name="start_time" class="popupDatepicker" <% if(typeof(goal) != "undefined") { %>value="<%= goal.start_time %>"<% } %>>
+                </div>
+            </div>
 
-			<div class="row">
-				<div class="large-12 columns">
-					<label>Ends On:</label>
-					<input name="end_time" class="popupDatepicker" <% if(typeof(goal) != "undefined") { %>value="<%= goal.end_time %>"<% } %>>
-				</div>
-			</div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>Ends On:</label>
+                    <input name="end_time" class="popupDatepicker" <% if(typeof(goal) != "undefined") { %>value="<%= goal.end_time %>"<% } %>>
+                </div>
+            </div>
 
-			<div class="row">
-				<div class="large-12 columns">
+            <div class="row">
+                <div class="large-12 columns">
                     <% if(typeof(edit) != "undefined") { %>
-                        <input type='submit' class="large button" value='Save Changes'>
-                        <input type='hidden' name='edit' value='true'>
-                        <input type='hidden' name='reward' value='<%= goal.reward %>'>
+                    <input type='submit' class="large button" value='Save Changes'>
+                    <input type='hidden' name='edit' value='true'>
+                    <input type='hidden' name='reward' value='<%= goal.reward %>'>
                     <% } else { %>
-                        <input type='submit' class="large button" value='Next: Set Reward'>
+                    <input type='submit' class="large button" value='Next: Set Reward'>
                     <% } %>
-				</div>
-			</div>
-		</form>
-	</div>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 

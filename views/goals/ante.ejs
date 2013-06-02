@@ -1,68 +1,68 @@
 <div class="row">
-	<div class="large-12 columns">
-		<h2>Add A Reward</h2>
-	</div>
+    <div class="large-12 columns">
+        <h2>Add A Reward</h2>
+    </div>
 </div>
 
 <div class="row panel">
-	<div class="large-12 columns">
-		<form method='post'>
-			<div class="row">
-				<div class="large-12 columns">
-					<label>Select a Reward</label>
-					<select name='reward'>
-						<option>Custom</option>
-						<option>A Giant Hug</option>
-						<option>A Warm Fuzzy Feeling</option>
-						<option>Pride, Because You're Pretty Great</option>
-					</select>
-				</div>
-			</div>
+    <div class="large-12 columns">
+        <form method='post'>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>Select a Reward</label>
+                    <select name='reward'>
+                        <option>Custom</option>
+                        <option>A Giant Hug</option>
+                        <option>A Warm Fuzzy Feeling</option>
+                        <option>Pride, Because You're Pretty Great</option>
+                    </select>
+                </div>
+            </div>
 
-			<div class="row">
-				<div class="large-12 columns">
-					<label>What's the Custom Reward?</label>
-					<input name='reward_text' type="text">
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>What's the Custom Reward?</label>
+                    <input name='reward_text' type="text">
                     <% if(typeof(error) != "undefined" && error.reward_text) { %><div class="error"> <%= error.reward_text %> </div> <% } %>
-				</div>
-			</div>
+                </div>
+            </div>
 
-			<div class="row">
-				<div class="large-12 columns">
-					<label>When Will the Reward Arrive?</label>
-					<input name='arrival' type="text">
-				</div>
-			</div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>When Will the Reward Arrive?</label>
+                    <input name='arrival' type="text">
+                </div>
+            </div>
 
-			<div class="row">
-				<div class="large-12 columns">
-					<label>How Many People Should Validate?</label>
-					<input name='verification_users' type="text">
-				</div>
-			</div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>How Many People Should Validate?</label>
+                    <input name='verification_users' type="text">
+                </div>
+            </div>
 
-			<div class="row">
-				<div class="large-12 columns">
-					<label>Who Should Validate?</label>
-					<select name='verification_method'>
-						<option>Me</option>
-						<option>Consensus</option>
-						<option>3rd Party</option>
-						<option>Location</option>
-					</select>
-				</div>
-			</div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>Who Should Validate?</label>
+                    <select name='verification_method'>
+                        <option>Me</option>
+                        <option>Consensus</option>
+                        <option>3rd Party</option>
+                        <option>Location</option>
+                    </select>
+                </div>
+            </div>
 
-			<div class="row">
-				<div class="large-12 columns">
+            <div class="row">
+                <div class="large-12 columns">
                     <% if(goal.user_id == user.user_id) { %>
-                        <input type='submit' class="large button" value='Finish Creating Goal!'>
+                    <input type='submit' class="large button" value='Finish Creating Goal!'>
                     <% } else { %>
-                        <input type='submit' class="large button" value='Up the Ante!'>
+                    <input type='submit' class="large button" value='Up the Ante!'>
                     <% } %>
-				</div>
-			</div>
-		</form>
-	</div>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
