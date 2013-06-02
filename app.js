@@ -39,19 +39,15 @@ if ('development' == app.get('env')) {
 }
 
 
-
-
-
-
-
-
 //get requests
 app.get('/', routes.index.index);
 app.get('/login', routes.login.new);
 app.get('/logout', routes.login.logout);
 app.get('/user',routes.user.info);
-app.get('/user/edit',routes.user.update);
 app.get('/user/:id',routes.user.info);
+//app.get('/user', function(req, res){res.render('profile/user', { user: req.session.user });});
+app.get('/user/edit', function(req, res){res.render('profile/update', { user: req.session.user });});
+//app.get('/user/:id', function(req, res){res.render('profile/user', {user:req.params.id});});
 app.get('/goals',routes.goal.get);
 app.get('/goals/new', function(req, res) {res.render('goals/new', { user: req.session.user });});
 app.get('/goals/create', function(req, res) {res.render('goals/create', { user: req.session.user });});
