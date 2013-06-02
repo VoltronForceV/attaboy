@@ -60,6 +60,7 @@ app.get('/rewards/new', function(req, res) {
 })
 
 app.get("/goals/:id", function(req, res) {
+    console.log(req.params.id);
     res.render('goals/show', { user: req.session.user })
 })
 

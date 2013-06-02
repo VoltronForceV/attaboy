@@ -1,0 +1,10 @@
+<% if(goals.length == 0) %>
+<p>No goals available.</p>
+<% for(var i = 0;i < goals.list;i++) {
+    var goal = goals[i];
+ %>
+    <div class="goal">
+        <div class="title"><%- goal.title %></div>
+        <div class="visibility">Visibility: <%- goal.visibility %></div>
+    </div>
+<% } %>
