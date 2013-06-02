@@ -6,7 +6,7 @@
     var goal = goals[i];
  %>
     <div class="goal">
-        <div class="title"><a href="/goals/<%= goal.goal_id %>"><%= goal.goal_title %></a></div>
+        <div class="title"><a href="/goal/<%= goal.goal_id %>"><%= goal.goal_title %></a></div>
         <div class="reward">Reward: <%= goal.reward %></div>
         <div class="users">Users: 0 / <%= goal.max_participants %></div>
     </div>

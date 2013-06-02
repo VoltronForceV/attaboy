@@ -53,18 +53,17 @@ app.get('/user',routes.user.info);
 app.get('/user/edit',routes.user.update);
 app.get('/user/:id',routes.user.info);
 app.get('/goals',routes.goal.get);
-app.get('/goals/new', function(req, res) {res.render('goals/new', { user: req.session.user });});
-app.get('/goals/create', function(req, res) {res.render('goals/create', { user: req.session.user });});
-app.get("/goals/:id", function(req, res) {res.render('goals/show', { user: req.session.user });});
+app.get('/goal/new', function(req, res) {res.render('goals/new', { user: req.session.user });});
+app.get('/goal/create', function(req, res) {res.render('goals/create', { user: req.session.user });});
+app.get("/goal/:id", function(req, res) {res.render('goals/show', { user: req.session.user });});
 app.get('/goal/:id/comment',routes.goal.get);
-//app.get('/goal/:id/ante',routes.goal.update); //needs view added
-app.get('/rewards/new/:goal_id', function(req, res) {res.render('rewards/new', { user: req.session.user, goal_id: req.params.goal_id });});
+app.get('/goal/:id/ante', function(req, res) {res.render('goals/ante', { user: req.session.user, goal_id: req.params.id });});
 app.get("/search", function(req, res){res.render('search', {user: req.session.user});});
-
 
 //post requests
 app.post('/login', routes.login.login);
-app.post('/goals/create', routes.goal.add);
+app.post('/goal/create', routes.goal.add);
+app.post('/goal/:id/ante', routes.goal.ante);
 
 
 

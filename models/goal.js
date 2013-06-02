@@ -32,9 +32,9 @@ var goal = (function()
         });
     }
 
-    function get(goal_id, callback)
+    function get(row, callback)
     {
-        connection.query('Select * from `goals` where goal_id = ? limit 1', [goal_id], function(error, result)
+        connection.query('Select * from `goals` where ? limit 1', row, function(error, result)
         {
             if(typeof callback === 'function') {
                 callback(error, result[0]);

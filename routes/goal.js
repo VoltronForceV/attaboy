@@ -14,6 +14,7 @@ var respond = function(error, response){
 },
 
 goal = require('../models/goal'),
+transaction = require('../models/transaction'),
 boilerplate = require('../boilerplate');
 
 var add = function(req, res)
@@ -34,7 +35,6 @@ var add = function(req, res)
             verification_users: '',
             visibility: ''
         };
-console.log(req.body);
 
         for(i in form_fields){
             if(req.body[i]!== undefined && req.body[i] !== ''){
@@ -48,7 +48,7 @@ console.log(req.body);
                     //populate with defaults
                     switch(i){
                     case 'reward':
-                        form_fields[i]="That warm fuzzy feeling <3";
+                        form_fields[i] = '{}';
                         break;
                     case 'verification_method':
                         form_fields[i]='creator';
@@ -82,16 +82,59 @@ console.log(req.body);
                 console.log(form_fields);
                 goal.add(form_fields, function(error, goal_id)
                 {
-                    res.redirect("/rewards/new/"+goal_id);
-//                    res.render("rewards/new", { user: req.session.user, goal_id: goal_id });
+                    res.redirect("/goal/"+goal_id+"/ante");
                 });
             }
             else
             {
-                res.render("goals/create", {error: error, user: req.session.user});
+                res.render("goal/create", {error: error, user: req.session.user});
             }
         }
     }
+},
+
+ante = function(req, res)
+{    
+    goal.get({goal_id: req.params.id}, function(error, goal_data)
+    {
+        var params = req.body, error = {};
+
+        if(params.reward == 'Custom' && params.reward_text == '')
+            error['reward_text'] = "You must select or enter a custom reward";
+
+        if(boilerplate.empty(error))
+        {
+            if(params.reward != 'Custom')
+                params.reward_text = params.reward;
+            
+            var reward = JSON.parse(goal_data.reward);
+            reward.push({
+                'user_id': req.session.user.user_id,
+                'text': params.reward_text,
+                'arrival': params.arrival});
+
+            reward = JSON.stringify(reward);
+
+            goal.update({
+                goal_id: req.params.id,
+                reward: reward,
+                verification_method: params.verification_method,
+                verification_users: params.verification_users}, function()
+                {
+                    var datetime = boilerplate.datetime(new Date());
+                    
+                    transaction.add({user_id: req.session.user.user_id, goal_id: req.params.id, action: 'goal', result: '{}', date: datetime}, function()
+                    {
+                        res.redirect("/goal/"+req.params.id);
+                    });
+                });
+        }
+        else
+        {
+            res.render("goals/ante", {error: error, goal_id: req.params.id});
+        }        
+    });
+
 },
 
 get = function(req, res) {
@@ -101,13 +144,14 @@ get = function(req, res) {
 index = function(req, res) {
         goal.list(20, function(err, data) {
             if(!err) {
-                res.render("goals/index", { user: req.session.user, goals: data});
+                res.render("goal/index", { user: req.session.user, goals: data});
             }
         })
     };
 
-module.exports= {
-    add:add,
-    get:get,
+module.exports = {
+    add: add,
+    ante: ante,
+    get: get,
     index: index
 };
