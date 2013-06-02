@@ -50,7 +50,6 @@ var transaction = (function()
             		            }
                             }
                         });
-            console.log(f);
         };
 
 

@@ -10,6 +10,7 @@
     "jade": "*",
     "mysql": "*",
     "ejs": "*",
-      "express-ejs-layouts": "*"
+      "express-ejs-layouts": "*",
+      "async": "*"
   }
 }
