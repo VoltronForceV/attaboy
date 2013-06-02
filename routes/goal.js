@@ -20,9 +20,7 @@ var user = require('../models/user');
 var transaction = require("../models/transaction")
 
 var add = function(req, res)
-{
-console.log(req.session.user);
-    
+{    
     if(req.body!== undefined){
         //goal_id
         var i,error={},form_fields={
@@ -84,7 +82,6 @@ console.log(req.session.user);
         {
             if(boilerplate.empty(error))
             {
-                console.log(form_fields);
                 goal.add(form_fields, function(error, goal_id)
                 {
                     res.redirect("/goal/"+goal_id+"/ante");
@@ -143,7 +140,7 @@ ante = function(req, res)
 },
 
 get = function(req, res) {
-    goal.get(req.params.id, function(err, data) {
+    goal.get({goal_id: req.params.id}, function(err, data) {
         user.get({ user_id: data.user_id }, function(error, user) {
             data.user = user;
             data.current_participants = 0;
