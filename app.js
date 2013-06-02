@@ -59,18 +59,23 @@ app.get('/goal/:id/finish', routes.goal.finish);
 app.get("/search", function(req, res){res.render('search');});
 app.get('/dashboard', routes.index.dashboard);
 
+app.get('/verifications', routes.user.verifications)
+app.get('/verifications/:id/:operation(verify|deny)', routes.user.verify)
 
 app.get('/auth',routes.login.auth);
 app.get('/authcb',routes.login.authcb);
-app.get('/verifications', routes.user.verifications);
 
 
 //post requests
 app.post('/login', routes.login.login);
+
 app.post('/goals/create', routes.goal.add);
 app.post('/user/edit', routes.user.process_update);
 app.post('/goal/create', routes.goal.add);
 app.post('/goal/:id/ante', routes.goal.ante);
+
+
+
 
 
 

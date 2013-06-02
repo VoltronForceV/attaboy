@@ -22,7 +22,7 @@ var transaction = (function()
     },
         get=function(row,callback){
             console.log('get transaction data');
-            connection.query('Select * from `users` where ? limit 1', row, function(error, result){
+            connection.query('Select * from `transactions` where ? limit 1', row, function(error, result){
                 console.log([error,result]);
                 if(typeof callback === 'function') {
                    
