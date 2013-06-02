@@ -13,11 +13,29 @@ var respond = function (error, response) {
         }
     },
 
-    goal = require('../models/goal'),
-    transaction = require('../models/transaction'),
-    boilerplate = require('../boilerplate');
-var user = require('../models/user');
-var transaction = require("../models/transaction")
+goal = require('../models/goal'),
+transaction = require('../models/transaction'),
+boilerplate = require('../boilerplate'),
+user = require('../models/user');
+
+var format_reward = function(reward)
+{
+    var formatted = "<ul>";
+    
+    for(var i = 0, len = reward.length; i < len; i++)
+    {
+        var user_data = user.get({user_id: reward[i].user_id});
+        var arrival = "";
+        
+        if(reward[i].arrival != '')
+            arrival = "Arriving "+ reward[i].arrival;
+        
+        formatted += "<li>"+reward[i].text+" courtesy of <a href='/user/"+user_data.user_id+"'>"+user_data.user_name+"</a> "+arrival+"</li>";
+    }
+
+    formatted = "</ul>";
+    return formatted;
+};
 
 var add = function (req, res) {
         if (req.body !== undefined) {
@@ -128,6 +146,8 @@ var add = function (req, res) {
     },
     get = function (req, res) {
         goal.get({goal_id: req.params.id}, function (err, data) {
+            data.reward = format_reward(data.reward);
+            
             user.get({ user_id: data.user_id }, function (error, user) {
                 data.user = user;
                 data.current_participants = 0;
