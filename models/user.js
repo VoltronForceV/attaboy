@@ -40,6 +40,7 @@ var user = (function()
 		        if(result!==undefined&&result.length>0){
 		            callback(error, result[0]);
 		        }
+
             }
         });
     }
@@ -49,7 +50,7 @@ var user = (function()
         connection.query('Select * from `users` order by `user_id` desc limit ?', [limit], function(error, result)
         {
             if(typeof callback === 'function') {
-		callback(error, result);
+                callback(error, result);
             }
         });
     }

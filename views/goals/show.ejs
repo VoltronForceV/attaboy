@@ -1,0 +1,67 @@
+<script type="text/javascript">
+$(function() {
+	$('#popupDatepicker').datepick();
+	$('#inlineDatepicker').datepick({onSelect: showDate});
+});
+
+function showDate(date) {
+	alert('The date chosen is ' + date);
+}
+</script>
+
+<div class="row panel">
+	<div class="large-12 columns">
+
+		<h3 id="goalName">Goal Name</h3>
+
+		<p id="goalDescription">Goal Description</p>
+
+		<h4>Created By</h4>
+		<p id="goalCreator">Username</p>
+
+		<h4>Tags</h4>
+		<p id="goalTags">Tags (Comma Seperated)</p>
+
+		<h4>Dates</h4>
+		<div class="row">
+			<div class="large-6 columns">
+				<h5>Starts At</h5>
+				<p id="goalDateStart">54646a54</p>
+			</div>
+			<div class="large-6 columns">
+				<h5>Ends At</h5>
+				<p id="goalEndedStart">65425132</p>
+			</div>
+		</div>
+
+		<h4>Headcount Required</h4>
+		<p id="goalRequiredHeadcount"># People Signed Up of # Required People</p>
+
+		<h4>Reward</h4>
+		<p id="goalReward">Reward</p>
+
+		<h5>Reward Requirments</h5>
+		<p id="goalRewardProof">Photos of finished shit</p>
+
+		<h5>Reward Distribution</h5>
+		<p id="goalRewardShiping">I will hug you when I see you</p>
+	</div>
+</div>
+
+		<!--TODO: WE NEED TO SET THE NUMBER ON THE EVEN CLASS ACCORDING TO THE # OF ACTIVE BUTTONS!! -->
+<div class="row">
+	<div class="large-12 columns">
+			<a href="#" class="button large-4 columns">Sign up!</a>
+			<a href="#" class="button large-4 columns">Increase the Reward for This</a>
+			<a href="#" class="button large-4 columns">Discuss This Goal</a>
+	</div>
+</div>
+
+<div class="row">
+	<div class="large-12 columns">
+			<a href="#" class="secondary button large-3 columns">Base a Goal on This</a>
+			<a href="#" class="secondary button large-3 columns">Actually, I Can't Help</a>	
+			<a href="#" class="secondary button large-3 columns">Edit This Goal</a>
+			<a href="#" class="secondary button large-3 columns">Cancel This Goal</a>
+	</div>
+</div>
