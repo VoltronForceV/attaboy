@@ -22,7 +22,7 @@ var info = function(req,res){
         console.log('loading other user page');
         //load other user page
         user_model.get({user_id: req.params.id}, function(err, result){
-
+            console.log(['results',result]);
             if(err!==undefined){
                 console.log('got user data');
                 //get transactions
