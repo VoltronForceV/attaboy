@@ -1,4 +1,4 @@
-var goal_model = require('./models/goal');
+var goal_model = require('../models/goal');
 var add= function(req, res){
         if(req.body!== undefined){
             //goal_id
