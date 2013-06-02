@@ -47,7 +47,7 @@ app.get('/login', routes.login.new);
 app.get('/logout', routes.login.logout);
 app.get('/user',routes.user.info);
 app.get('/user/:id',routes.user.info);
-app.get('/user/edit', function(req, res){res.render('profile/update');});
+app.get('/user/edit', routes.user.update);
 app.get('/goals',routes.goal.index);
 app.get('/goals/new', function(req, res) {res.render('goals/new');});
 app.get('/goals/create', function(req, res) {res.render('goals/create');});
@@ -60,7 +60,7 @@ app.get('/dashboard', routes.index.dashboard);
 //post requests
 app.post('/login', routes.login.login);
 app.post('/goals/create', routes.goal.add);
-
+app.post('/user/edit', routes.user.process_update);
 
 
 
