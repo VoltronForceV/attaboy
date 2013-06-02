@@ -49,18 +49,23 @@ app.get('/user',routes.user.info);
 app.get('/user/:id',routes.user.info);
 app.get('/user/edit', routes.user.update);
 app.get('/goals',routes.goal.index);
-app.get('/goals/new', function(req, res) {res.render('goals/new');});
-app.get('/goals/create', function(req, res) {res.render('goals/create');});
-app.get("/goals/:id", routes.goal.get);
+app.get('/goal/new', function(req, res) {res.render('goals/new');});
+app.get('/goal/create', function(req, res) {res.render('goals/create');});
+app.get("/goal/:id", routes.goal.get);
 app.get('/goal/:id/comment',routes.goal.get);
-app.get('/rewards/new/:goal_id', function(req, res) {res.render('rewards/new', { goal_id: req.params.goal_id });});
+app.get('/goal/:id/ante', function(req, res) {res.render('goals/ante', { goal_id: req.params.id });});
 app.get("/search", function(req, res){res.render('search');});
 app.get('/dashboard', routes.index.dashboard);
 
 //post requests
 app.post('/login', routes.login.login);
+
 app.post('/goals/create', routes.goal.add);
 app.post('/user/edit', routes.user.process_update);
+app.post('/goal/create', routes.goal.add);
+app.post('/goal/:id/ante', routes.goal.ante);
+
+
 
 
 
