@@ -36,8 +36,11 @@ var user = (function()
     {
         connection.query('Select * from `users` where ? limit 1', row, function(error, result)
         {
+
             if(typeof callback === 'function') {
-                callback(error, result[0]);
+		if(result!==undefined){
+		    callback(error, result[0]);
+		}
             }
         });
     }
@@ -47,7 +50,7 @@ var user = (function()
         connection.query('Select * from `users` order by `user_id` desc limit ?', [limit], function(error, result)
         {
             if(typeof callback === 'function') {
-                callback(error, result);
+		callback(error, result);
             }
         });
     }
