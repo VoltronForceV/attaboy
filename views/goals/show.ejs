@@ -50,7 +50,7 @@ function showDate(date) {
 		<!--TODO: WE NEED TO SET THE NUMBER ON THE EVEN CLASS ACCORDING TO THE # OF ACTIVE BUTTONS!! -->
 <div class="row">
 	<div class="large-12 columns">
-			<% if(signed_up) { %><a href="#" class="button large-4 columns">Already Signed Up</a><% } else { %><a href="/goals/<%= goal.goal_id %>/join" class="button large-4 columns">Sign up!</a><% } %>
+			<% if(signed_up) { %><a href="#" class="button large-4 columns">Already Signed Up</a><% } else { %><a href="/goal/<%= goal.goal_id %>/join" class="button large-4 columns">Sign up!</a><% } %>
 			<a href="#" class="button large-4 columns">Increase the Reward for This</a>
 			<a href="#" class="button large-4 columns">Discuss This Goal</a>
 	</div>
