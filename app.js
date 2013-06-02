@@ -14,6 +14,9 @@ var express = require('express'),
 	    login : require('./routes/login'),
 	    goal  : require('./routes/goal')
     },
+    models = {
+        goal  : require('./models/goal')
+    },
     expressLayouts = require('express-ejs-layouts');
 var app = express();
 
@@ -53,7 +56,7 @@ app.get('/goal/new', function(req, res) {res.render('goals/new');});
 app.get('/goal/create', function(req, res) {res.render('goals/create');});
 app.get("/goal/:id", routes.goal.get);
 app.get('/goal/:id/comment',routes.goal.get);
-app.get('/goal/:id/ante', function(req, res) {res.render('goals/ante', { goal_id: req.params.id });});
+app.get('/goal/:id/ante', function(req, res) { models.goal.get({goal_id: req.params.id}, function (error, goal_data) { res.render('goals/ante', { goal_id: req.params.id, user: req.session.user, goal: goal_data }); }); });
 app.get('/goal/:id/join', routes.goal.join);
 app.get('/goal/:id/finish', routes.goal.finish);
 app.get("/search", function(req, res){res.render('search');});
