@@ -16,20 +16,18 @@
 		<div class="large-6 columns">
 			<h3>Completed Goals</h3>
 			<ul>
-				<li><a href="#">Sew a Bew</a></li>
-				<li><a href="#">Community Service Sweeping</a></li>
-				<li><a href="#">Thunderdome!</a></li>
-				<li><a href="#">Wander</a></li>
+                <% for(var i = 0;i < completed_goals.length;i++) { %>
+                    <li><a href="/goal/<%= completed_goals[i].goal_id %>"><%= completed_goals[i].goal_title %></a></li>
+                <% } %>
 			</ul>
 		</div>
 
 		<div class="large-6 columns">
 			<h3>Goals in Progess</h3>
 			<ul>
-				<li><a href="#">Clean Up Thompson Park</a></li>
-				<li><a href="#">Brainstorm Community Service Projects</a></li>
-				<li><a href="#">Introduce me to Denver</a></li>
-				<li><a href="#">Howzfore i type abunch</a></li>
+                <% for(var i = 0;i < active_goals.length;i++) { %>
+                    <li><a href="/goal/<%= active_goals[i].goal_id %>"><%= completed_goals[i].goal_title %></a></li>
+                <% } %>
 			</ul>
 		</div>
 	</div>

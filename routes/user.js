@@ -18,6 +18,18 @@ var respond = function (err, res, response) {
     async = require('async'),
     SendGrid = require('sendgrid').SendGrid,
     config = require('../config');
+
+var mysql = require('mysql');
+
+var connection = mysql.createConnection({
+    host: 'localhost',
+    user: config.mysql.user,
+    password: config.mysql.password,
+    database: config.mysql.database
+});
+
+connection.connect();
+
 var sendgrid = new SendGrid("abaldwin", config.sendgrid.secret);
 
 var info = function (req, res) {
@@ -38,7 +50,17 @@ var info = function (req, res) {
                             console.log('got transactions');
                             //filter transactions
                             //load user page
-                            res.render('user/profile', { user: result, active_goals: undefined, completed_goals: undefined });
+                            connection.query("select goal_id, goal_title from `goals` where goal_id in (select t1.goal_id from transactions t1 where user_id = ? and action = 'join' and (select count(*) from transactions t2 where t1.user_id = t2.user_id and t1.goal_id = t2.goal_id and t2.action = 'verify') = 0)",
+                                [result.user_id], function (error, active_goals) {
+                                    console.log(error);
+                                    console.log(active_goals)
+                                    connection.query("select goal_id, goal_title from goals where goal_id in (select t1.goal_id from transactions t1 where user_id = ? and action = 'join' and (select count(*) from transactions t2 where t1.user_id = t2.user_id and t1.goal_id = t2.goal_id and t2.action = 'verify') > 0)",
+                                        [result.user_id], function (error, completed_goals) {
+                                            console.log(error)
+                                            res.render('user/profile', { user: result, active_goals: active_goals, completed_goals: completed_goals });
+                                        })
+                                })
+
                         });
                     }
                 }
@@ -58,7 +80,17 @@ var info = function (req, res) {
                     //filter transactions
                     //load user page
                     console.log('rendertime');
-                    res.render('user/profile', { user: req.session.user, active_goals: undefined, completed_goals: undefined });
+                    connection.query("select goal_id, goal_title from `goals` where goal_id in (select t1.goal_id from transactions t1 where user_id = ? and action = 'join' and (select count(*) from transactions t2 where t1.user_id = t2.user_id and t1.goal_id = t2.goal_id and t2.action = 'verify') = 0)",
+                        [req.session.user.user_id], function (error, active_goals) {
+                            console.log(error);
+                            console.log(active_goals)
+                            connection.query("select goal_id, goal_title from goals where goal_id in (select t1.goal_id from transactions t1 where user_id = ? and action = 'join' and (select count(*) from transactions t2 where t1.user_id = t2.user_id and t1.goal_id = t2.goal_id and t2.action = 'verify') > 0)",
+                                [req.session.user.user_id], function (error, completed_goals) {
+                                    console.log(error)
+                                    res.render('user/profile', { user: req.session.user, active_goals: active_goals, completed_goals: completed_goals });
+                                })
+                        })
+
                 }
             });
         }
@@ -178,18 +210,19 @@ var verify = function (req, res) {
     transaction_model.get({ transaction_id: req.params.id }, function (e, d) {
         transaction_model.add({ user_id: d.user_id, goal_id: d.goal_id, action: req.params.operation, date: new Date() }, function () {
             goals.get({goal_id: d.goal_id}, function (err, result) {
-            user_model.get({user_id: d.user_id}, function (error, user_result) {
-                sendgrid.send({
-                    to: user_result.user_email,
-                    from: "jaolen@gmail.com",
-                    subject: "YOU'RE DONE!",
-                    text: req.session.user.user_name + " has verified your goal (" + result.goal_title + ") is finished! Congratulations!"
-                }, function (success, message) {
-                    if (!success) {
-                        console.log(message);
-                    }
+                user_model.get({user_id: d.user_id}, function (error, user_result) {
+                    sendgrid.send({
+                        to: user_result.user_email,
+                        from: "jaolen@gmail.com",
+                        subject: "YOU'RE DONE!",
+                        text: req.session.user.user_name + " has verified your goal (" + result.goal_title + ") is finished! Congratulations!"
+                    }, function (success, message) {
+                        if (!success) {
+                            console.log(message);
+                        }
+                    })
                 })
-            }) })
+            })
             res.redirect("/verifications")
         })
     })
