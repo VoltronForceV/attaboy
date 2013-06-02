@@ -12,7 +12,7 @@ var respond = function(err, response){
         });
     }
 },
-    goal_model = require('./models/goal');
+    goal_model = require('../models/goal');
 var add= function(req, res){
         if(req.body!== undefined){
             //goal_id
