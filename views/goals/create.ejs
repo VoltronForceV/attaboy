@@ -1,0 +1,60 @@
+<div class="row panel">
+	<div class="large-12 columns">
+		<form method='post'>
+			<div class="row">
+				<div class="large-12 columns">
+					<label>Goal Name</label>
+					<input name="goal_title" type="text">
+                    <% if(typeof(error) != "undefined" && error.goal_title) { %><div class="error"> <%= error.goal_title %> </div> <% } %>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="large-12 columns">
+					<label>Goal Description</label>
+					<textarea name="goal_text"></textarea>
+                    <% if(typeof(error) != "undefined" && error.goal_text) { %><div class="error"> <%= error.goal_text %> </div> <% } %>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="large-12 columns">
+					<label>Tags (Comma Seperated)</label>
+					<input name="tags" type="text">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="large-12 columns">
+					<label>Privacy</label>
+					<select name="visibility">
+						<option>Public</option>
+						<option>Personal</option>
+						<option>Friends</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="large-12 columns">
+					<label>Starts At:</label>
+					<input name="start_time" type="datetime-local">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="large-12 columns">
+					<label>Ends At:</label>
+					<input name="end_time" type="datetime-local">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="large-12 columns">
+					<input type='submit' class="large button" value='Next: Set Reward'>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+

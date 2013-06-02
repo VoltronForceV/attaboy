@@ -36,6 +36,7 @@ var user = (function()
     {
         connection.query('Select * from `users` where ? limit 1', row, function(error, result)
         {
+
             if(typeof callback === 'function') {
                 callback(error, result[0]);
             }

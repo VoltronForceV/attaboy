@@ -1,5 +1,5 @@
-var respond = function(err, response){
-    if(err!==undefined){
+var respond = function(error, response){
+    if(error!==undefined){
         res.send({
             status : 'failure',
             data   : response
@@ -12,87 +12,100 @@ var respond = function(err, response){
         });
     }
 },
-    goal_model = require('../models/goal');
-var add= function(req, res){
-        if(req.body!== undefined){
-            //goal_id
-            var i,err={},user_id = session.username,form_fields={
-                parent_id:undefined,
-                location_id:undefined,
-                date:undefined,
-                duration:undefined,
-                goal_title:undefined,
-                goal_text:undefined,
-                reward:undefined,
-                max_participants:undefined,
-                verification_method:undefined,
-                verification_users:undefined,
-                visibility:undefined
-            };
 
-            for(i in form_fields){
-                if(req.body[i]!==undefined){
-                    form_fields[i]=req.body[i];
-                }
-                else{
-                    if(i==('goal_title'||'goal_text')){
-                        err['missing'].push(i);
-                    }
-                    else{
-                        //populate with defaults
-                        switch(i){
-                        case 'parent_id':
-                            form_fields[i]=0;
-                            break;
-                        case 'location_id':
-                            form_fields[i]=0;
-                            break;
-                        case 'date':
-                            form_fields[i]=0;
-                            break;
-                        case 'duration':
-                            form_fields[i]=0;
-                            break;
-                        case 'max_participants':
-                            form_fields[i]=0;
-                            break;
-                        case 'reward':
-                            form_fields[i]="That warm fuzzy feeling <3";
-                            break;
-                        case 'verification_method':
-                            form_fields[i]='creator';
-                            break;
-                        case 'verification_users':
-                            form_fields[i]='1';
-                            break;
-                        case 'visibility':
-                            form_fields[i]='public';
-                            break;
-                        }
-                    }
-                }
-            } //end post iteration
+goal = require('../models/goal'),
+boilerplate = require('../boilerplate');
 
-            if(err!==undefined){
-                 respond(true,err);
+var add = function(req, res)
+{
+    if(req.body!== undefined){
+        //goal_id
+        var i,error={},user_id = req.session.user.user_id,form_fields={
+            parent_id: '',
+            location_id: '',
+            start_date: '',
+            end_date: '',
+            duration: '',
+            goal_title: '',
+            goal_text: '',
+            reward: '',
+            max_participants: '',
+            verification_method: '',
+            verification_users: '',
+            visibility: ''
+        };
+console.log(req.body);
+
+        for(i in form_fields){
+            if(req.body[i]!== undefined && req.body[i] !== ''){
+                form_fields[i]=req.body[i];
             }
             else{
-                goal_model.add(form_fields, function(err,goal_id){
-                    respond(err,goal_id);
+                if(i == 'goal_title' || i == 'goal_text'){
+                    error[i] = "This value is required.";
+                }
+                else{
+                    //populate with defaults
+                    switch(i){
+                    case 'reward':
+                        form_fields[i]="That warm fuzzy feeling <3";
+                        break;
+                    case 'verification_method':
+                        form_fields[i]='creator';
+                        break;
+                    case 'verification_users':
+                        form_fields[i]='1';
+                        break;
+                    case 'visibility':
+                        form_fields[i]='public';
+                        break;
+                    }
+                }
+            }
+        } //end post iteration
+
+        if(req.xhr)
+        {
+            if(boilerplate.empty(error)){
+                goal.add(form_fields, function(error,goal_id){
+                    respond(error, goal_id);
                 });
             }
+            else{
+                 respond(true, error);
+            }
         }
-    },
-    get= function(parameter,callback){
+        else
+        {
+            if(boilerplate.empty(error))
+            {
+                console.log(form_fields);
+                goal.add(form_fields, function(error, goal_id)
+                {
+                    res.redirect("/rewards/new/"+goal_id);
+//                    res.render("rewards/new", { user: req.session.user, goal_id: goal_id });
+                });
+            }
+            else
+            {
+                res.render("goals/create", {error: error, user: req.session.user});
+            }
+        }
+    }
+},
 
-    },index = function(req, res) {
-        goal_model.list(20, function(err, data) {
-            console.log(data.length)
+get = function(req, res) {
+
+},
+
+index = function(req, res) {
+        goal.list(20, function(err, data) {
             if(!err) {
                 res.render("goals/index", { user: req.session.user, goals: data});
             }
         })
-    }
+    };
+
 module.exports= {
     add:add,
     get:get,
