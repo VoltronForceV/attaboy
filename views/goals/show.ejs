@@ -50,17 +50,28 @@ function showDate(date) {
 		<!--TODO: WE NEED TO SET THE NUMBER ON THE EVEN CLASS ACCORDING TO THE # OF ACTIVE BUTTONS!! -->
 <div class="row">
 	<div class="large-12 columns">
-			<% if(finished) { %><a href="#" class="button large-4 columns">I've finished this goal!</a><%  } else if(signed_up) { %><a href="/goal/<%= goal.goal_id %>/finish" class="button large-4 columns">I've done it!</a><% } else { %><a href="/goal/<%= goal.goal_id %>/join" class="button large-4 columns">Sign up!</a><% } %>
-			<a href="#" class="button large-4 columns">Increase the Reward for This</a>
-			<a href="#" class="button large-4 columns">Discuss This Goal</a>
+            <% if(goal.user_id == user.user_id) { %>
+                <a href="/goal/<%= goal.goal_id %>/ante" class="button large-6 columns">Increase the Reward</a>
+                <a href="#" class="button large-6 columns">Discuss This Goal</a>
+            <% } else { %>
+                <% if(finished) { %><a href="#" class="button large-4 columns">I've finished this goal!</a><%  } else if(signed_up) { %><a href="/goal/<%= goal.goal_id %>/finish" class="button large-4 columns">I've done it!</a><% } else { %><a href="/goal/<%= goal.goal_id %>/join" class="button large-4 columns">Sign up!</a><% } %>
+                <a href="/goal/<%= goal.goal_id %>/ante" class="button large-4 columns">Increase the Reward for This</a>
+                <a href="#" class="button large-4 columns">Discuss This Goal</a>
+            <% } %>
 	</div>
 </div>
 
 <div class="row">
 	<div class="large-12 columns">
-			<a href="#" class="secondary button large-3 columns">Base a Goal on This</a>
-			<a href="#" class="secondary button large-3 columns">Actually, I Can't Help</a>	
-			<a href="#" class="secondary button large-3 columns">Edit This Goal</a>
-			<a href="#" class="secondary button large-3 columns">Cancel This Goal</a>
+        <% if(goal.user_id == user.user_id) { %>
+            <a href="#" class="secondary button large-4 columns">Base a Goal on This</a>
+            <a href="#" class="secondary button large-4 columns">Edit This Goal</a>
+            <a href="#" class="secondary button large-4 columns">Cancel This Goal</a>
+        <% } else if(signed_up) { %>
+            <a href="#" class="secondary button large-6 columns">Base a Goal on This</a>
+            <a href="#" class="secondary button large-6 columns">Actually, I Can't Help</a>	
+        <% } else { %>
+            <a href="#" class="secondary button large-12 columns">Base a Goal on This</a>            
+        <% } %>
 	</div>
 </div>
