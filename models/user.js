@@ -40,7 +40,10 @@ var user = (function()
 		        if(result!==undefined){
                     callback(error, result[0]);
 		        }
-
+                else
+                {
+                    callback(error, undefined);
+                }
             }
         });
     }
