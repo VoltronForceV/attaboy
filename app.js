@@ -9,10 +9,10 @@ var express = require('express'),
     path = require('path'),
     config = require('./config'),
     routes ={
-	index : require('./routes/index'),
-	user  : require('./routes/user'),
-	login : require('./routes/login'),
-	goal  : require('./routes/goal')
+	    index : require('./routes/index'),
+	    user  : require('./routes/user'),
+	    login : require('./routes/login'),
+	    goal  : require('./routes/goal')
     },
     expressLayouts = require('express-ejs-layouts');
 var app = express();
@@ -35,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+    app.use(express.errorHandler());
 }
 
 
@@ -77,5 +77,5 @@ app.post('/goals/create', routes.goal.add);
 
 
 http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+    console.log('Express server listening on port ' + app.get('port'));
 });

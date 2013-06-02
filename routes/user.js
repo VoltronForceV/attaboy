@@ -1,4 +1,4 @@
-var respond = function(err, response){
+var respond = function(err, res, response){
     if(err!==undefined){
         res.send({
             status : 'failure',
@@ -17,11 +17,11 @@ var info = function(req,res){
     // req.session.user.user_id; //user id
     if(req.session.user!==undefined){
         user_model.get({user_name: req.session.user.user_id}, function(err, result){
-	    respond(err,result);
+	    respond(err,res,result);
 	});
     }
     else{
-	respond(true, "not logged in");
+	respond(true,res, "not logged in");
 	//not logged in
     }
 },
@@ -43,16 +43,16 @@ var info = function(req,res){
 		    }
 		}
 		user_model.update(profile_update, function(err, result){
-		    respond(err,result);
+		    respond(err,res,result);
 		});
 	    }
 	    else{
 		//no data
-		respond(true,'no data supplied');
+		respond(true,res,'no data supplied');
 	    }
 	}
 	else{
-	    respond(true, "not logged in");
+	    respond(true,res, "not logged in");
 	    //not logged in
 	}
     };
