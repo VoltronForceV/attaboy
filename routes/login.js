@@ -36,7 +36,7 @@ exports.logout = function(req, res) {
 exports.auth = function(req,res){
     var googleapis = require('googleapis'),
         OAuth2Client = googleapis.OAuth2Client;
-    var oauth2Client = new OAuth2Client('509218314760.apps.googleusercontent.com', 'H69oQg1TVTk9eQY2tVeYrrXh', 'http://hyper.wetfish.net:8082/authcb');
+    var oauth2Client = new OAuth2Client('509218314760.apps.googleusercontent.com', 'H69oQg1TVTk9eQY2tVeYrrXh', 'http://attaboy.wetfish.net:8080/authcb');
 
     if(req.query!==undefined){
         // generates a url that allows offline access and asks permissions
