@@ -35,7 +35,7 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser(config.cookie_secret));
 app.use(express.session());
-app.use(routes.login.checkLogin);
+app.use(routes.login.checkLogin); // login filter, prevents unauthorized logins
 app.use(app.router);
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -49,13 +49,18 @@ app.get('/', routes.index.index);
 app.get('/login', routes.login.new);
 app.post('/login', routes.login.login);
 app.get('/logout', routes.login.logout);
+app.get('/goals', routes.goal.index);
 
 app.get('/goals/new', function(req, res) {
-    res.render('goals/new');
+    res.render('goals/new', { user: req.session.user });
 });
 
 app.get('/rewards/new', function(req, res) {
-    res.render('rewards/new')
+    res.render('rewards/new', { user: req.session.user })
+})
+
+app.get("/goals/:id", function(req, res) {
+    res.render('goals/show', { user: req.session.user })
 })
 
 //app.get('/goal/add', routes.goal.add);
