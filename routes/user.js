@@ -80,8 +80,12 @@ var info = function(req,res){
     },
     process_update = function(req,res){
 	    var i;
+
+
 	    if(req.session.user!==undefined){
+        console.log('s');
 	        if(req.body!=undefined){
+                        console.log('s');
 		        var profile_update={
 			        user_name: req.session.user.user_id,
 			        location_id: undefined,
@@ -108,9 +112,11 @@ var info = function(req,res){
 	        respond(true,res, "not logged in");
 	        //not logged in
 	    }
+
     };
 
 module.exports={
     info   : info,
-    update : update
+    update : update,
+    process_update: process_update
 };
