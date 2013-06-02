@@ -29,5 +29,6 @@ exports.checkLogin = function(req, res, next) {
 
 exports.logout = function(req, res) {
     delete req.session.user;
+    delete res.locals.user;
     res.render("login/new");
 }
