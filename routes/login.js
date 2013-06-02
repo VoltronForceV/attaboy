@@ -20,8 +20,8 @@ exports.login = function(req, res) {
 }
 
 exports.checkLogin = function(req, res, next) {
-    if(req.path != "/" && req.path != "/login" && req.path.indexOf("/js/") != 0 && !req.path.indexOf("/css/") != 0 && !req.path.indexOf("/media/") != 0 && !req.session.user) {
-        res.redirect("/");
+    if(req.path != "/" && req.path != "/login" && req.path.indexOf("/js/") != 0 && req.path.indexOf("/css/") != 0 && req.path.indexOf("/media/") != 0 && !req.session.user) {
+        res.redirect("/login");
     } else {
         next();
     }
