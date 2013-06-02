@@ -33,7 +33,7 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
+app.use(express.cookieParser(config.cookie_secret));
 app.use(express.session());
 app.use(routes.login.checkLogin);
 app.use(app.router);
