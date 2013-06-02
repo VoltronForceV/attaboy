@@ -15,19 +15,21 @@ var respond = function(err, res, response){
     user_model=require('../models/user'),
     transaction_model=require('../models/transaction');
 var info = function(req,res){
+    //TODO filter and pass transactions
+    var active_goals={},completed_goals={};
     if(req.params.id !==undefined){
         //load other user page
-
-
         user_model.get({user_id: req.params.id}, function(err, result){
+            console.log(['zzzzzzzz',result]);
             if(err!==undefined){
-                transaction_model.get({user_id: req.session.user}, function(err, result){
-                    //filter transactions
-                    //load user page
-                    res.render('profile/user', { user: req.session.user });
-                });
                 //get transactions
-                res.render('profile/user', { user: result,active_goals: undefined,completed_goals: undefined });
+                if(result.user_id!==undefined){
+                    transaction_model.get({user_id: result.user_id}, function(err, transactions){
+                        //filter transactions
+                        //load user page
+                        res.render('profile/user', { user: result,active_goals: undefined,completed_goals: undefined });
+                    });
+                }
             }
             else{
 
@@ -38,7 +40,7 @@ var info = function(req,res){
     else if(req.session.user!==undefined){
         //get transactions
         //load user page
-        transaction_model.get({user_id: req.session.user}, function(err, result){
+        transaction_model.get({user_id: req.session.user}, function(err, transactions){
             if(err!==undefined){
                 //filter transactions
                 //load user page
