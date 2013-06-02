@@ -45,7 +45,7 @@ var transaction = (function()
             }
                         var f = connection.query('Select * from `transactions` where ' + s, vals, function(error, result){
                             if(typeof callback === 'function') {
-            		            if(result!==undefined&&result.length>0){
+            		            if(result!==undefined){
             		                callback(error, result);
             		            }
                             }
