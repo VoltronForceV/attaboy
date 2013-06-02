@@ -21,9 +21,12 @@ var transaction = require("../models/transaction")
 
 var add = function(req, res)
 {
+console.log(req.session.user);
+    
     if(req.body!== undefined){
         //goal_id
-        var i,error={},user_id = req.session.user.user_id,form_fields={
+        var i,error={},form_fields={
+            user_id: req.session.user.user_id,
             parent_id: '',
             location_id: '',
             start_date: '',
@@ -50,7 +53,7 @@ var add = function(req, res)
                     //populate with defaults
                     switch(i){
                     case 'reward':
-                        form_fields[i] = '{}';
+                        form_fields[i] = '[]';
                         break;
                     case 'verification_method':
                         form_fields[i]='creator';
