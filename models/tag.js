@@ -8,20 +8,18 @@ var connection = mysql.createConnection({
     database : config.mysql.database
 });
 
+connection.connect();
+
 var tag = (function()
 {
     function add(row, callback)
     {
-        connection.connect();
-
         connection.query('Insert into `tags` set ?', row, function(error, result)
         {
             if(typeof callback === 'function') {
                 callback(error, result.insertId);
             }
         });
-        
-        connection.end();
     }
 
     return {
