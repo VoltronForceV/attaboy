@@ -11,6 +11,7 @@
     "mysql": "*",
     "ejs": "*",
       "express-ejs-layouts": "*",
-      "async": "*"
+      "async": "*",
+      "sendgrid": "*"
   }
 }
