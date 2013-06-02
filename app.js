@@ -74,13 +74,6 @@ app.post('/goal/:id/ante', routes.goal.ante);
 
 
 
-
-
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 6c30814d39e295c0b048b9db27dda02de79f5744
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });
