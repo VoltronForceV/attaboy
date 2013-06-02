@@ -16,6 +16,8 @@ var goal = (function()
     {
         connection.query('Insert into `goals` set ?', row, function(error, result)
         {
+            console.log([error, result]);
+            
             if(typeof callback === 'function') {
                 callback(error, result.insertId);
             }

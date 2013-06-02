@@ -51,12 +51,18 @@ app.post('/login', routes.login.login);
 app.get('/logout', routes.login.logout);
 
 app.get('/goals/new', function(req, res) {
-    res.render('goals/new');
+    res.render('goals/new', { user: req.session.user });
 });
 
-app.get('/rewards/new', function(req, res) {
-    res.render('rewards/new')
-})
+app.get('/goals/create', function(req, res) {
+    res.render('goals/create', { user: req.session.user });
+});
+
+app.post('/goals/create', routes.goal.add);
+
+app.get('/rewards/new/:goal_id', function(req, res) {
+    res.render('rewards/new', { user: req.session.user, goal_id: req.params.goal_id })
+});
 
 //app.get('/goal/add', routes.goal.add);
 

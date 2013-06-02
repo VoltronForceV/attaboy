@@ -4,11 +4,11 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
+  res.render('index', { user: req.session.user });
 };
 
 exports.profile = function(req, res){
-    res.render('index', { title: 'Express' });
+    res.render('index', { user: req.session.user });
 };
 
 exports.request = function(req,res){
