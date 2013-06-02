@@ -35,10 +35,10 @@ var user = (function()
     function get(row, callback){
         console.log('get user data');
         connection.query('Select * from `users` where ? limit 1', row, function(error, result){
-            console.log([error,result]);
+            console.log([error,result,'dfffff']);
             if(typeof callback === 'function') {
-		        if(result!==undefined&&result.length>0){
-		            callback(error, result[0]);
+		        if(result!==undefined){
+                    callback(error, result[0]);
 		        }
 
             }
