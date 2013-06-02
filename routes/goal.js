@@ -16,6 +16,7 @@ var respond = function(error, response){
 goal = require('../models/goal'),
 transaction = require('../models/transaction'),
 boilerplate = require('../boilerplate');
+var user = require('../models/user');
 
 var add = function(req, res)
 {
@@ -87,7 +88,7 @@ var add = function(req, res)
             }
             else
             {
-                res.render("goal/create", {error: error, user: req.session.user});
+                res.render("goal/create", {error: error});
             }
         }
     }
@@ -138,16 +139,34 @@ ante = function(req, res)
 },
 
 get = function(req, res) {
+    goal.get(req.params.id, function(err, data) {
+        user.get({ user_id: data.user_id }, function(error, user) {
+            data.user = user;
+            data.current_participants = 0;
+            res.render('goals/show', {goal: data});
+        })
+
+    })
 
 },
 
 index = function(req, res) {
         goal.list(20, function(err, data) {
             if(!err) {
-                res.render("goal/index", { user: req.session.user, goals: data});
+                res.render("goal/index", { goals: data});
             }
         })
     };
+
+var join = function(req, res) {
+    goal.join(req.session.user, req.params.id, function(err) {
+        if(err) {
+            console.log(err);
+        }
+        res.render("goals")
+    })
+}
+
 
 module.exports = {
     add: add,

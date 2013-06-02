@@ -29,6 +29,10 @@ app.use(express.methodOverride());
 app.use(express.cookieParser(config.cookie_secret));
 app.use(express.session());
 app.use(routes.login.checkLogin); // login filter, prevents unauthorized logins
+app.use(function(req, res, next) {
+    res.locals.user = req.session.user;
+    next();
+});
 app.use(app.router);
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -37,28 +41,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
-
-
-
-
-
-
-
-
 //get requests
 app.get('/', routes.index.index);
 app.get('/login', routes.login.new);
 app.get('/logout', routes.login.logout);
 app.get('/user',routes.user.info);
-app.get('/user/edit',routes.user.update);
 app.get('/user/:id',routes.user.info);
-app.get('/goals',routes.goal.get);
-app.get('/goal/new', function(req, res) {res.render('goals/new', { user: req.session.user });});
-app.get('/goal/create', function(req, res) {res.render('goals/create', { user: req.session.user });});
-app.get("/goal/:id", function(req, res) {res.render('goals/show', { user: req.session.user });});
+app.get('/user/edit', function(req, res){res.render('profile/update');});
+app.get('/goals',routes.goal.index);
+app.get('/goal/new', function(req, res) {res.render('goals/new');});
+app.get('/goal/create', function(req, res) {res.render('goals/create');});
+app.get("/goal/:id", routes.goal.get);
 app.get('/goal/:id/comment',routes.goal.get);
-app.get('/goal/:id/ante', function(req, res) {res.render('goals/ante', { user: req.session.user, goal_id: req.params.id });});
-app.get("/search", function(req, res){res.render('search', {user: req.session.user});});
+app.get('/goal/:id/ante', function(req, res) {res.render('goals/ante', { goal_id: req.params.id });});
+app.get("/search", function(req, res){res.render('search');});
+app.get('/dashboard', routes.index.dashboard);
 
 //post requests
 app.post('/login', routes.login.login);

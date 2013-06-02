@@ -9,7 +9,7 @@ exports.login = function(req, res) {
     users.get({user_name: params.user }, function(e, user) {
 	if(user != null) {
             req.session.user = user;
-            res.render("index", {title: "Express", user: req.session.user });
+            res.render("dashboard", {user: user});
         } else {
             res.render("login/new", {error: true});
         }
@@ -20,8 +20,8 @@ exports.login = function(req, res) {
 }
 
 exports.checkLogin = function(req, res, next) {
-    if(req.path != "/" && req.path != "/login" && req.path.indexOf("/js/") != 0 && !req.path.indexOf("/css/") != 0 && !req.path.indexOf("/media/") != 0 && !req.session.user) {
-        res.redirect("/");
+    if(req.path != "/" && req.path != "/login" && req.path.indexOf("/js/") != 0 && req.path.indexOf("/css/") != 0 && req.path.indexOf("/media/") != 0 && !req.session.user) {
+        res.redirect("/login");
     } else {
         next();
     }
@@ -29,5 +29,6 @@ exports.checkLogin = function(req, res, next) {
 
 exports.logout = function(req, res) {
     delete req.session.user;
+    delete res.locals.user;
     res.render("login/new");
 }
