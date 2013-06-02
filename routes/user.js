@@ -13,7 +13,9 @@ var respond = function(err, res, response){
     }
 },
     user_model=require('../models/user'),
-    transaction_model=require('../models/transaction');
+    transaction_model=require('../models/transaction'),
+    goals=require('../models/goal'),
+    async=require('async');
 var info = function(req,res){
     //TODO filter and pass transactions
     console.log('getting info');
@@ -115,8 +117,40 @@ var info = function(req,res){
 
     };
 
+var verifications = function(req, res) {
+    goals.find({user_id: req.session.user.user_id}, function(e, r) {
+        var arr = [];
+        async.forEach(r, function(item, callback) {
+            transaction_model.find({goal_id: item.goal_id}, function(e, transactions){
+                var i, j;
+                for(i = 0;i < transactions.length;i++) {
+                    if(transactions[i].action == "finish") {
+                        var found = false;
+                        for(j = 0;j < transactions.length;j++) {
+                            if(transactions[j].action == "verify" && transactions[j].user_id == transactions[i].user_id && transactions[j].goal_id == transactions[i].goal_id) {
+                                found = true
+                            }
+                        }
+                        if(!found) {
+                            arr.push(transactions[i])
+                        }
+                    }
+                }
+                callback();
+            })
+
+        }, function() {
+            res.send(arr)
+        })
+
+
+    })
+
+}
+
 module.exports={
     info   : info,
     update : update,
-    process_update: process_update
+    process_update: process_update,
+    verifications: verifications
 };

@@ -59,6 +59,8 @@ app.get('/goal/:id/finish', routes.goal.finish)
 app.get("/search", function(req, res){res.render('search');});
 app.get('/dashboard', routes.index.dashboard);
 
+app.get('/verifications', routes.user.verifications)
+
 //post requests
 app.post('/login', routes.login.login);
 

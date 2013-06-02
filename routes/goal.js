@@ -146,7 +146,6 @@ var add = function (req, res) {
         });
 
     },
-
     get = function (req, res) {
         goal.get({goal_id: req.params.id}, function (err, data) {
             
