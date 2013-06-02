@@ -54,9 +54,12 @@ app.get('/user/edit', routes.user.update);
 app.get('/goals',routes.goal.index);
 app.get('/goal/new', function(req, res) {res.render('goals/new');});
 app.get('/goal/create', function(req, res) {res.render('goals/create');});
+app.get('/goal/:id/create', routes.goal.create);
 app.get("/goal/:id", routes.goal.get);
 app.get('/goal/:id/comment',routes.goal.get);
 app.get('/goal/:id/ante', function(req, res) { models.goal.get({goal_id: req.params.id}, function (error, goal_data) { res.render('goals/ante', { goal_id: req.params.id, user: req.session.user, goal: goal_data }); }); });
+app.get('/goal/:id/edit', routes.goal.edit);
+app.get('/goal/:id/cancel', routes.goal.cancel);
 app.get('/goal/:id/join', routes.goal.join);
 app.get('/goal/:id/finish', routes.goal.finish);
 app.get("/search", function(req, res){res.render('search');});
@@ -76,6 +79,7 @@ app.post('/goals/create', routes.goal.add);
 app.post('/user/edit', routes.user.process_update);
 app.post('/goal/create', routes.goal.add);
 app.post('/goal/:id/ante', routes.goal.ante);
+app.post('/goal/:id/edit', routes.goal.add);
 
 
 

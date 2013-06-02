@@ -21,7 +21,19 @@ var respond = function (error, response) {
     config = require('../config');
 var sendgrid = new SendGrid("abaldwin", config.sendgrid.secret);
 
-var add = function (req, res) {
+var create = function(req, res) {
+        goal.get({goal_id: req.params.id}, function (error, goal_data)
+        {
+            if(goal_data.start_time === undefined)
+                goal_data.start_time = '';
+            if(goal_data.end_time === undefined)
+                goal_data.end_time = '';
+                
+            res.render('goals/create', {goal: goal_data});
+        });
+    },
+
+    add = function (req, res) {
         if (req.body !== undefined) {
             //goal_id
             var i, error = {}, form_fields = {
@@ -80,9 +92,20 @@ var add = function (req, res) {
             }
             else {
                 if (boilerplate.empty(error)) {
-                    goal.add(form_fields, function (error, goal_id) {
-                        res.redirect("/goal/" + goal_id + "/ante");
-                    });
+                    if(req.body.edit == 'true')
+                    {
+                        form_fields.goal_id = req.params.id;
+                        
+                        goal.update(form_fields, function (error) {
+                            res.redirect("/goal/" + req.params.id);
+                        });
+                    }
+                    else
+                    {
+                        goal.add(form_fields, function (error, goal_id) {
+                            res.redirect("/goal/" + goal_id + "/ante");
+                        });
+                    }
                 }
                 else {
                     res.render("goals/create", {error: error});
@@ -157,8 +180,29 @@ var add = function (req, res) {
                 res.render("goals/index", { goals: data});
             }
         })
-    };
+    },
 
+    edit = function(req, res)
+    {
+        goal.get({goal_id: req.params.id}, function (error, goal_data)
+        {
+            if(goal_data.start_time === undefined)
+                goal_data.start_time = '';
+            if(goal_data.end_time === undefined)
+                goal_data.end_time = '';
+                
+            res.render('goals/create', {goal: goal_data, edit: true});
+        });
+    },
+
+    cancel = function(req, res)
+    {
+        goal.delete({goal_id: req.params.id}, function (error)
+        {
+            res.redirect("/user/" + req.session.user.user_id);
+        });
+    };
+    
 var join = function (req, res) {
     transaction.add({user_id: req.session.user.user_id, goal_id: req.params.id, date: new Date(), action: "join"}, function (err, result) {
         goal.get({goal_id: req.params.id}, function (err, result) {
@@ -176,9 +220,7 @@ var join = function (req, res) {
             })
         })
         res.redirect("/goal/" + req.params.id);
-
-    });
-
+    }
 }
 var finish = function (req, res) {
     transaction.add({user_id: req.session.user.user_id, goal_id: req.params.id, date: new Date(), action: "finish"}, function (err, result) {
@@ -202,12 +244,14 @@ var finish = function (req, res) {
     })
 }
 
-
 module.exports = {
+    create: create,
     add: add,
     ante: ante,
     get: get,
     index: index,
+    edit: edit,
+    cancel: cancel,
     join: join,
     finish: finish
 };

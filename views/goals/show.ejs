@@ -64,14 +64,14 @@ function showDate(date) {
 <div class="row">
 	<div class="large-12 columns">
         <% if(goal.user_id == user.user_id) { %>
-            <a href="#" class="secondary button large-4 columns">Base a Goal on This</a>
-            <a href="#" class="secondary button large-4 columns">Edit This Goal</a>
-            <a href="#" class="secondary button large-4 columns">Cancel This Goal</a>
+            <a href="/goal/<%= goal.goal_id %>/create" class="secondary button large-4 columns">Base a Goal on This</a>
+            <a href="/goal/<%= goal.goal_id %>/edit" class="secondary button large-4 columns">Edit This Goal</a>
+            <a href="/goal/<%= goal.goal_id %>/cancel" class="secondary button large-4 columns">Cancel This Goal</a>
         <% } else if(signed_up) { %>
-            <a href="#" class="secondary button large-6 columns">Base a Goal on This</a>
-            <a href="#" class="secondary button large-6 columns">Actually, I Can't Help</a>	
+            <a href="/goal/<%= goal.goal_id %>/create" class="secondary button large-6 columns">Base a Goal on This</a>
+            <a href="/goal/<%= goal.goal_id %>/cancel" class="secondary button large-6 columns">Actually, I Can't Help</a>	
         <% } else { %>
-            <a href="#" class="secondary button large-12 columns">Base a Goal on This</a>            
+            <a href="/goal/<%= goal.goal_id %>/create" class="secondary button large-12 columns">Base a Goal on This</a>            
         <% } %>
 	</div>
 </div>
