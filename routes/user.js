@@ -117,30 +117,50 @@ var info = function(req,res){
 
     };
 
+
+//TODO: vastly improve this logic's efficiency.
 var verifications = function(req, res) {
     goals.find({user_id: req.session.user.user_id}, function(e, r) {
         var arr = [];
         async.forEach(r, function(item, callback) {
             transaction_model.find({goal_id: item.goal_id}, function(e, transactions){
-                var i, j;
-                for(i = 0;i < transactions.length;i++) {
-                    if(transactions[i].action == "finish") {
+                var j;
+                async.forEach(transactions, function(trans, cb2) {
+                    if(trans.action == "finish") {
                         var found = false;
                         for(j = 0;j < transactions.length;j++) {
-                            if(transactions[j].action == "verify" && transactions[j].user_id == transactions[i].user_id && transactions[j].goal_id == transactions[i].goal_id) {
+                            if(transactions[j].action == "verify" && transactions[j].user_id == trans.user_id && transactions[j].goal_id == trans.goal_id) {
                                 found = true
                             }
                         }
                         if(!found) {
-                            arr.push(transactions[i])
+                            async.parallel([function(cb3) { user_model.get({user_id: trans.user_id}, function(e, u) {
+                                trans.user = u
+                                cb3();
+                            }) },
+                                function(cb3) {
+                                    goals.get({ goal_id: trans.goal_id }, function(e, u) {
+                                        trans.goal = u
+                                        cb3();
+                                    })
+                                }], function() {
+                                arr.push(trans)
+                                cb2();
+                            })
+
+                        } else {
+                            cb2();
                         }
+                    } else {
+                        cb2();
                     }
-                }
-                callback();
+                }, function() {
+                  callback();
+                })
             })
 
         }, function() {
-            res.send(arr)
+            res.render("user/verifications", {verifications: arr})
         })
 
 

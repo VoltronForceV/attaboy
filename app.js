@@ -54,23 +54,23 @@ app.get('/goal/create', function(req, res) {res.render('goals/create');});
 app.get("/goal/:id", routes.goal.get);
 app.get('/goal/:id/comment',routes.goal.get);
 app.get('/goal/:id/ante', function(req, res) {res.render('goals/ante', { goal_id: req.params.id });});
-app.get('/goal/:id/join', routes.goal.join)
-app.get('/goal/:id/finish', routes.goal.finish)
+app.get('/goal/:id/join', routes.goal.join);
+app.get('/goal/:id/finish', routes.goal.finish);
 app.get("/search", function(req, res){res.render('search');});
 app.get('/dashboard', routes.index.dashboard);
 
-app.get('/verifications', routes.user.verifications)
+
+app.get('/auth',routes.login.auth);
+app.get('/authcb',routes.login.authcb);
+app.get('/verifications', routes.user.verifications);
+
 
 //post requests
 app.post('/login', routes.login.login);
-
 app.post('/goals/create', routes.goal.add);
 app.post('/user/edit', routes.user.process_update);
 app.post('/goal/create', routes.goal.add);
 app.post('/goal/:id/ante', routes.goal.ante);
-
-
-
 
 
 
