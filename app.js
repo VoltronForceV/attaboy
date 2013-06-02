@@ -51,7 +51,7 @@ app.get('/logout', routes.login.logout);
 app.get('/user',routes.user.info);
 app.get('/user/edit',routes.user.update);
 app.get('/user/:id',routes.user.info);
-app.get('/goals',routes.goal.get);
+app.get('/goals',routes.goal.index);
 app.get('/goals/new', function(req, res) {res.render('goals/new');});
 app.get('/goals/create', function(req, res) {res.render('goals/create');});
 app.get("/goals/:id", function(req, res) {res.render('goals/show');});
