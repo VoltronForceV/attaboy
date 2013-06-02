@@ -1,3 +1,5 @@
+var user = require('./models/user');
+
 // Thanks stack overflow!
 module.exports.empty = function(obj) {
     for(var prop in obj) {

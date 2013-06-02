@@ -1,4 +1,5 @@
 var config = require('../config');
+var user = require('./user');
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({
@@ -20,11 +21,27 @@ var goal = (function () {
     }
 
     function update(row, callback) {
-        connection.query('Update `goals` set ? where goal_id = ' + row.goal_id, row, function (error, result) {
-            if (typeof callback === 'function') {
-                callback(error);
-            }
-        });
+        if(row.reward !== undefined)
+        {
+            format_reward(row.reward, function(output)
+            {
+                row.formatted_reward = output;
+
+                connection.query('Update `goals` set ? where goal_id = ' + row.goal_id, row, function (error, result) {
+                    if (typeof callback === 'function') {
+                        callback(error);
+                    }
+                });
+            });
+        }
+        else
+        {
+            connection.query('Update `goals` set ? where goal_id = ' + row.goal_id, row, function (error, result) {
+                if (typeof callback === 'function') {
+                    callback(error);
+                }
+            });
+        }
     }
 
     function get(row, callback) {
@@ -60,6 +77,30 @@ var goal = (function () {
                 callback(error, result);
             }
         });
+    }
+
+    function format_reward(reward, callback)
+    {
+        reward = JSON.parse(reward);   
+        var output = "";
+
+        for(var i = reward.length; i > 0; i--)
+        {
+            var current = reward.shift();
+            var arrival = "";
+            
+            if(current.arrival != '')
+                arrival = "Arriving "+ current.arrival;
+                
+            user.get({user_id: current.user_id}, function(error, user_data)
+            {
+                output += "<li>"+current.text+" courtesy of <a href='/user/"+user_data.user_id+"'>"+user_data.user_name+"</a> "+arrival+"</li>";
+
+                if(i == 0){
+                    callback("<ul>"+output+"</ul>");
+                }
+            });
+        }
     }
 
     return {

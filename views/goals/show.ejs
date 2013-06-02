@@ -37,7 +37,7 @@ function showDate(date) {
 		<p id="goalRequiredHeadcount"># of People Signed Up: <%= goal.current_participants %> # of Required People: <%= goal.max_participants %></p>
 
 		<h4>Reward</h4>
-		<p id="goalReward"><%= goal.reward %></p>
+		<p id="goalReward"><%- goal.formatted_reward %></p>
 
 		<!--<h5>Reward Requirements</h5>
 		<p id="goalRewardProof">Photos of finished shit</p>
