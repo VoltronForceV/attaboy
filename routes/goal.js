@@ -15,9 +15,28 @@ var respond = function(error, response){
 
 goal = require('../models/goal'),
 transaction = require('../models/transaction'),
-boilerplate = require('../boilerplate');
-var user = require('../models/user');
-var transaction = require("../models/transaction")
+boilerplate = require('../boilerplate'),
+user = require('../models/user');
+
+var parse_reward = function(reward)
+{
+    var parsed = "<ul>";
+    
+    for(var i = 0, len = reward.length; i < len; i++)
+    {
+        var user_data = user.get({user_id: reward[i].user_id});
+        var arrival = "";
+        
+        if(reward[i].arrival != '')
+            arrival = "Arriving "+ reward[i].arrival;
+        
+        parsed += "<li>"+reward[i].text+" courtesy of <a href='/user/"+user_data.user_id+"'>"+user_data.user_name+"</a> "+arrival+"</li>";
+    }
+
+    parsed = "</ul>";
+    return parsed;
+};
+
 
 var add = function(req, res)
 {    
