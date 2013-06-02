@@ -1,6 +1,18 @@
+<div class="row">
+	<div class="large-12 columns">
+		<h2>Please Log In</h2>
+	</div>
+</div>
+
 <div class="row panel">
 	<div class="large-12 columns">
-		<h3>Please Log In</h3>
+		<a href="#" class="large button expand">Sign in with Google</a>
+	</div>
+</div>
+
+<div class="row panel">
+	<div class="large-12 columns">
+		<h2>Or Use Your Site Login</h2>
 		<form method="post" action="/login">
 			<div>
 				<input type="text" name="user" placeholder="Username" />
@@ -9,9 +21,7 @@
 				<input type="text" name="password" placeholder="Password" />
 			</div>
 			<% if(typeof(error) != "undefined" && error) { %><div class="error">Invalid username and/or password. Please try again.</div> <% } %>
-			<div>
-				<input type="submit" class="button" value="Login" />
-			</div>
+			<input type="submit" class="button large" value="Login" / >
 		</form>
 	</div>
 </div>

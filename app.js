@@ -54,11 +54,16 @@ app.get('/goal/create', function(req, res) {res.render('goals/create');});
 app.get("/goal/:id", routes.goal.get);
 app.get('/goal/:id/comment',routes.goal.get);
 app.get('/goal/:id/ante', function(req, res) {res.render('goals/ante', { goal_id: req.params.id });});
+app.get('/goal/:id/join', routes.goal.join);
+app.get('/goal/:id/finish', routes.goal.finish);
 app.get("/search", function(req, res){res.render('search');});
 app.get('/dashboard', routes.index.dashboard);
 
+
 app.get('/auth',routes.login.auth);
 app.get('/authcb',routes.login.authcb);
+app.get('/verifications', routes.user.verifications);
+
 
 //post requests
 app.post('/login', routes.login.login);
@@ -72,7 +77,10 @@ app.post('/goal/:id/ante', routes.goal.ante);
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6c30814d39e295c0b048b9db27dda02de79f5744
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });

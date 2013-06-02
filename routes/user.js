@@ -13,7 +13,9 @@ var respond = function(err, res, response){
     }
 },
     user_model=require('../models/user'),
-    transaction_model=require('../models/transaction');
+    transaction_model=require('../models/transaction'),
+    goals=require('../models/goal'),
+    async=require('async');
 var info = function(req,res){
     //TODO filter and pass transactions
     console.log('getting info');
@@ -115,8 +117,60 @@ var info = function(req,res){
 
     };
 
+
+//TODO: vastly improve this logic's efficiency.
+var verifications = function(req, res) {
+    goals.find({user_id: req.session.user.user_id}, function(e, r) {
+        var arr = [];
+        async.forEach(r, function(item, callback) {
+            transaction_model.find({goal_id: item.goal_id}, function(e, transactions){
+                var j;
+                async.forEach(transactions, function(trans, cb2) {
+                    if(trans.action == "finish") {
+                        var found = false;
+                        for(j = 0;j < transactions.length;j++) {
+                            if(transactions[j].action == "verify" && transactions[j].user_id == trans.user_id && transactions[j].goal_id == trans.goal_id) {
+                                found = true
+                            }
+                        }
+                        if(!found) {
+                            async.parallel([function(cb3) { user_model.get({user_id: trans.user_id}, function(e, u) {
+                                trans.user = u
+                                cb3();
+                            }) },
+                                function(cb3) {
+                                    goals.get({ goal_id: trans.goal_id }, function(e, u) {
+                                        trans.goal = u
+                                        cb3();
+                                    })
+                                }], function() {
+                                arr.push(trans)
+                                cb2();
+                            })
+
+                        } else {
+                            cb2();
+                        }
+                    } else {
+                        cb2();
+                    }
+                }, function() {
+                  callback();
+                })
+            })
+
+        }, function() {
+            res.render("user/verifications", {verifications: arr})
+        })
+
+
+    })
+
+}
+
 module.exports={
     info   : info,
     update : update,
-    process_update: process_update
+    process_update: process_update,
+    verifications: verifications
 };
