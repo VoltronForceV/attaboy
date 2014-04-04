@@ -128,11 +128,11 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`user_id`, `location_id`, `user_name`, `user_email`, `join_date`, `login_date`) VALUES
-(1, 0, 'rachel', 'itsrachelfish@gmail.com', '2013-06-01 16:25:53', '0000-00-00 00:00:00'),
-(2, 0, 'devnill', 'devnill@gmail.com', '2013-06-01 16:26:49', '0000-00-00 00:00:00'),
-(3, 0, 'AtomicFiredoll', 'atomicfiredoll@usebombs.com', '2013-06-01 16:28:47', '0000-00-00 00:00:00'),
-(4, 0, 'Alan', 'Jaolen@gmail.com', '2013-06-01 16:30:23', '0000-00-00 00:00:00'),
-(5, 0, 'Jazimus', 'JasonZucker@gmail.com', '2013-06-01 16:30:46', '0000-00-00 00:00:00');
+(1, 0, 'rachel', 'abc@gmail.com', '2013-06-01 16:25:53', '0000-00-00 00:00:00'),
+(2, 0, 'devnill', 'xyz@gmail.com', '2013-06-01 16:26:49', '0000-00-00 00:00:00'),
+(3, 0, 'AtomicFiredoll', 'meh@usebombs.com', '2013-06-01 16:28:47', '0000-00-00 00:00:00'),
+(4, 0, 'Alan', '123@gmail.com', '2013-06-01 16:30:23', '0000-00-00 00:00:00'),
+(5, 0, 'Jazimus', 'bbs@gmail.com', '2013-06-01 16:30:46', '0000-00-00 00:00:00');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
